@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './components/layout/Header';
 import { Hero } from './components/home/Hero';
 import { ListingCard } from './components/listings/ListingCard';
@@ -16,6 +16,18 @@ export default function App() {
     roomType: [],
     location: ''
   });
+
+  const [listings, setListings] = React.useState([]);
+
+  // Fetch listings on component mount
+  useEffect(() => {
+    fetch('http://localhost:3000/api/listings')
+      .then((response) => response.json())
+      .then((data) => {
+        setListings(data);
+      })
+      .catch((error) => console.error('Error fetching listings:', error));
+  }, []);
 
   // Simple client-side routing
   const path = window.location.pathname;
@@ -56,7 +68,11 @@ export default function App() {
           </div>
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Listings will be fetched and mapped here */}
+            {listings.length > 0 ? (
+                listings.map((listing) => <ListingCard key={listing._id} listing={listing} />)
+            ) : (
+              <p>No listings available</p>
+            )}
             </div>
           </div>
         </div>

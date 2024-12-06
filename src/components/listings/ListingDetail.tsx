@@ -209,7 +209,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
             <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
               <div className="text-center mb-6">
                 <div className="text-3xl font-bold text-gray-900">
-                  ${listing.price}
+                  ₺{listing.price}
                   <span className="text-lg text-gray-500 font-normal">/month</span>
                 </div>
               </div>

@@ -24,7 +24,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           className="w-full h-full object-cover rounded-t-xl"
         />
         <div className="absolute top-3 right-3 bg-white px-2 py-1 rounded-full text-sm font-semibold">
-          ${listing.price}/month
+          ₺{listing.price}/month
         </div>
       </div>
       
