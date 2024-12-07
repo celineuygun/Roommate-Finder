@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { Hero } from './components/home/Hero';
 import { ListingCard } from './components/listings/ListingCard';
@@ -8,25 +8,37 @@ import { SearchFilters } from './components/search/SearchFilters';
 import { SignInForm } from './components/auth/SignInForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ProfilePage } from './components/profile/ProfilePage';
-import type { FilterOptions } from './types';
+import { LoadingSpinner } from './components/ui/LoadingSpinner';
+import type { FilterOptions, Listing } from './types';
 
 export default function App() {
-  const [filters, setFilters] = React.useState<FilterOptions>({
-    priceRange: [0, 2000],
+  const [filters, setFilters] = useState<FilterOptions>({
+    priceRange: [0, 5000],
     roomType: [],
     location: ''
   });
 
-  const [listings, setListings] = React.useState([]);
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch listings on component mount
   useEffect(() => {
-    fetch('http://localhost:3000/api/listings')
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchListings = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/listings');
+        if (!response.ok) {
+          throw new Error('Failed to fetch listings');
+        }
+        const data = await response.json();
         setListings(data);
-      })
-      .catch((error) => console.error('Error fetching listings:', error));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load listings');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchListings();
   }, []);
 
   // Simple client-side routing
@@ -67,13 +79,21 @@ export default function App() {
             />
           </div>
           <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {listings.length > 0 ? (
-                listings.map((listing) => <ListingCard key={listing._id} listing={listing} />)
+            {isLoading ? (
+              <div className="flex justify-center py-12">
+                <LoadingSpinner />
+              </div>
+            ) : error ? (
+              <div className="text-center py-12">
+                <p className="text-red-600">{error}</p>
+              </div>
             ) : (
-              <p>No listings available</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {listings.map((listing) => (
+                  <ListingCard key={listing._id} listing={listing} />
+                ))}
+              </div>
             )}
-            </div>
           </div>
         </div>
       </main>
