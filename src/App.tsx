@@ -19,8 +19,10 @@ export default function App() {
   });
 
   const [listings, setListings] = useState<Listing[]>([]);
+  const [filteredListings, setFilteredListings] = useState<Listing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -31,6 +33,7 @@ export default function App() {
         }
         const data = await response.json();
         setListings(data);
+        setFilteredListings(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load listings');
       } finally {
@@ -40,6 +43,47 @@ export default function App() {
 
     fetchListings();
   }, []);
+
+  useEffect(() => {
+    let result = [...listings];
+
+    // Apply search term filter
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      result = result.filter(listing => 
+        listing.title.toLowerCase().includes(searchLower) ||
+        listing.description.toLowerCase().includes(searchLower) ||
+        listing.location.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Apply price range filter
+    result = result.filter(listing => 
+      listing.price >= filters.priceRange[0] &&
+      listing.price <= filters.priceRange[1]
+    );
+
+    // Apply room type filter
+    if (filters.roomType.length > 0) {
+      result = result.filter(listing => 
+        filters.roomType.includes(listing.roomType)
+      );
+    }
+
+    // Apply location filter
+    if (filters.location) {
+      const locationLower = filters.location.toLowerCase();
+      result = result.filter(listing =>
+        listing.location.toLowerCase().includes(locationLower)
+      );
+    }
+
+    setFilteredListings(result);
+  }, [searchTerm, filters, listings]);
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+  };
 
   // Simple client-side routing
   const path = window.location.pathname;
@@ -69,7 +113,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <Hero />
+      <Hero onSearch={handleSearch} />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-1">
@@ -87,9 +131,13 @@ export default function App() {
               <div className="text-center py-12">
                 <p className="text-red-600">{error}</p>
               </div>
+            ) : filteredListings.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600">No listings found matching your criteria.</p>
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {listings.map((listing) => (
+                {filteredListings.map((listing) => (
                   <ListingCard key={listing._id} listing={listing} />
                 ))}
               </div>
