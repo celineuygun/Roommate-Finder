@@ -1,4 +1,5 @@
 import type { ListingPreferences } from './preferences';
+import type { User } from './user';
 
 export interface Listing {
   _id: string;
@@ -12,10 +13,5 @@ export interface Listing {
   availableFrom: string;
   createdAt: string;
   preferences: ListingPreferences;
-  host: {
-    _id: string;
-    name: string;
-    avatar: string;
-    occupation: string;
-  };
+  host: User;
 }

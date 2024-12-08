@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { ListingPreferences } from './ListingPreferences';
+import { ImageSlider } from './ImageSlider';
 import { useAuth } from '../../contexts/AuthContext';
 import type { Listing } from '../../types';
 
@@ -147,13 +148,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
           {/* Images and Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Image Gallery */}
-            <div className="aspect-video rounded-lg overflow-hidden">
-              <img
-                src={listing.images[0]}
-                alt={listing.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <ImageSlider images={listing.images} />
 
             {/* Listing Information */}
             <div className="bg-white rounded-lg shadow-sm p-6">
@@ -209,7 +204,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
             <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
               <div className="text-center mb-6">
                 <div className="text-3xl font-bold text-gray-900">
-                  ₺{listing.price}
+                  ${listing.price}
                   <span className="text-lg text-gray-500 font-normal">/month</span>
                 </div>
               </div>
