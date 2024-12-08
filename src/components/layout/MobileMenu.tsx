@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, LogIn, UserPlus, LogOut, User } from 'lucide-react';
+import { X, LogIn, UserPlus, LogOut, User, PlusCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import type { User as UserType } from '../../types';
@@ -45,6 +45,15 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
         <div className="px-4 py-4 space-y-4">
           {isAuthenticated ? (
             <>
+              <Button 
+                variant="primary" 
+                size="sm" 
+                className="w-full flex items-center justify-center"
+                onClick={() => window.location.href = '/new-listing'}
+              >
+                <PlusCircle className="w-4 h-4 mr-2" />
+                Create Listing
+              </Button>
               <Button 
                 variant="outline" 
                 size="sm" 

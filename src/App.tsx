@@ -12,13 +12,22 @@ import { ProfilePage } from './components/profile/ProfilePage';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import type { FilterOptions, Listing } from './types';
 
-export default function App() {
-  const [filters, setFilters] = useState<FilterOptions>({
-    priceRange: [0, 5000],
-    roomType: [],
-    location: ''
-  });
+const initialFilters: FilterOptions = {
+  priceRange: [0, 5000],
+  roomType: [],
+  location: '',
+  preferences: {
+    smoking: null,
+    pets: null,
+    nightLife: null,
+    gender: 'any',
+    ageRange: [18, 99],
+    occupation: 'any'
+  }
+};
 
+export default function App() {
+  const [filters, setFilters] = useState<FilterOptions>(initialFilters);
   const [listings, setListings] = useState<Listing[]>([]);
   const [filteredListings, setFilteredListings] = useState<Listing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,6 +86,42 @@ export default function App() {
       result = result.filter(listing =>
         listing.location.toLowerCase().includes(locationLower)
       );
+    }
+
+    // Apply preference filters
+    if (filters.preferences) {
+      // Gender preference
+      if (filters.preferences.gender !== 'any') {
+        result = result.filter(listing =>
+          listing.preferences.gender === 'any' || 
+          listing.preferences.gender === filters.preferences.gender
+        );
+      }
+
+      // Age range preference
+      result = result.filter(listing =>
+        listing.preferences.ageRange[0] <= filters.preferences.ageRange[1] &&
+        listing.preferences.ageRange[1] >= filters.preferences.ageRange[0]
+      );
+
+      // Occupation preference
+      if (filters.preferences.occupation !== 'any') {
+        result = result.filter(listing =>
+          listing.preferences.occupation === 'any' ||
+          listing.preferences.occupation === filters.preferences.occupation
+        );
+      }
+
+      // Lifestyle preferences
+      if (filters.preferences.smoking !== null) {
+        result = result.filter(listing => listing.preferences.smoking === filters.preferences.smoking);
+      }
+      if (filters.preferences.pets !== null) {
+        result = result.filter(listing => listing.preferences.pets === filters.preferences.pets);
+      }
+      if (filters.preferences.nightLife !== null) {
+        result = result.filter(listing => listing.preferences.nightLife === filters.preferences.nightLife);
+      }
     }
 
     setFilteredListings(result);
