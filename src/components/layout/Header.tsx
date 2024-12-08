@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Menu, User, LogIn, UserPlus, LogOut } from 'lucide-react';
+import { Search, Menu, User, LogIn, UserPlus, LogOut, PlusCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { MobileMenu } from './MobileMenu';
 import { useAuth } from '../../contexts/AuthContext';
@@ -22,6 +22,15 @@ export function Header() {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
+                <Button 
+                  variant="primary" 
+                  size="sm"
+                  onClick={() => window.location.href = '/new-listing'}
+                  className="flex items-center"
+                >
+                  <PlusCircle className="w-4 h-4 mr-2" />
+                  Create Listing
+                </Button>
                 <a 
                   href="/profile" 
                   className="flex items-center text-gray-600 hover:text-gray-900"
