@@ -4,6 +4,7 @@ import { Hero } from './components/home/Hero';
 import { ListingCard } from './components/listings/ListingCard';
 import { ListingDetail } from './components/listings/ListingDetail';
 import { NewListingForm } from './components/listings/NewListingForm';
+import { EditListingForm } from './components/listings/EditListingForm';
 import { SearchFilters } from './components/search/SearchFilters';
 import { SignInForm } from './components/auth/SignInForm';
 import { RegisterForm } from './components/auth/RegisterForm';
@@ -88,6 +89,12 @@ export default function App() {
   // Simple client-side routing
   const path = window.location.pathname;
   const listingMatch = path.match(/^\/listing\/(.+)$/);
+  const editListingMatch = path.match(/^\/listing\/(.+)\/edit$/);
+
+  if (editListingMatch) {
+    const listingId = editListingMatch[1];
+    return <EditListingForm listingId={listingId} />;
+  }
 
   if (listingMatch) {
     const listingId = listingMatch[1];
