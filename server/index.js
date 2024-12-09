@@ -4,13 +4,26 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import jwt from 'jsonwebtoken';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import listingRoutes from './routes/listings.js';
+import messageRoutes from './routes/messages.js';
+import Message from './models/Message.js';
 
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'http://localhost:5173',
+    credentials: true
+  }
+});
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Middleware
@@ -33,10 +46,56 @@ mongoose.connect(process.env.MONGODB_URI)
     process.exit(1);
   });
 
+// Socket.IO Authentication Middleware
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (!token) {
+    return next(new Error('Authentication error'));
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    socket.userId = decoded.userId;
+    next();
+  } catch (err) {
+    next(new Error('Authentication error'));
+  }
+});
+
+// Socket.IO Connection Handler
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.userId);
+
+  socket.on('sendMessage', async (messageData) => {
+    try {
+      const message = new Message({
+        sender: socket.userId,
+        receiver: messageData.receiver,
+        listing: messageData.listing,
+        content: messageData.content
+      });
+
+      const savedMessage = await message.save();
+      const populatedMessage = await Message.findById(savedMessage._id)
+        .populate('sender', 'name avatar')
+        .populate('receiver', 'name avatar');
+
+      io.emit('newMessage', populatedMessage);
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.userId);
+  });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/listings', listingRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -48,7 +107,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 

@@ -24,7 +24,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           className="w-full h-full object-cover rounded-t-xl"
         />
         <div className="absolute top-3 right-3 bg-white px-2 py-1 rounded-full text-sm font-semibold">
-          ₺{listing.price}/month
+          ${listing.price}/month
         </div>
       </div>
       
@@ -64,17 +64,17 @@ export function ListingCard({ listing }: ListingCardProps) {
           
           {/* Host Preferences */}
           <div className="mt-3 flex flex-wrap gap-2">
-            {listing.host.preferences.smoking && (
+            {listing.host.preferences?.smoking && (
               <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                 Smoking allowed
               </span>
             )}
-            {listing.host.preferences.pets && (
+            {listing.host.preferences?.pets && (
               <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                 Pet friendly
               </span>
             )}
-            {listing.host.preferences.nightLife && (
+            {listing.host.preferences?.nightLife && (
               <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                 Night life friendly
               </span>

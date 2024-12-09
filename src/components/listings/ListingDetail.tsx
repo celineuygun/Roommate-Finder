@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Home, Calendar, ArrowLeft, Share2, Heart, Edit2, Trash2 } from 'lucide-react';
+import { MapPin, Home, Calendar, ArrowLeft, Share2, Heart, Edit2, Trash2, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { ListingPreferences } from './ListingPreferences';
 import { ImageSlider } from './ImageSlider';
+import { ChatWindow } from '../chat/ChatWindow';
 import { useAuth } from '../../contexts/AuthContext';
-import type { Listing } from '../../types';
+import type { Listing, Message } from '../../types';
 
 interface ListingDetailProps {
   listingId: string;
@@ -18,6 +19,11 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [showInquiries, setShowInquiries] = useState(false);
+  const [inquiries, setInquiries] = useState<Message[]>([]);
+  const [isLoadingInquiries, setIsLoadingInquiries] = useState(false);
+  const [selectedInquiry, setSelectedInquiry] = useState<Message | null>(null);
 
   const isOwner = user?._id === listing?.host._id;
 
@@ -39,6 +45,39 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
 
     fetchListing();
   }, [listingId]);
+
+  useEffect(() => {
+    const fetchInquiries = async () => {
+      if (!isOwner || !listing || !user) return;
+
+      setIsLoadingInquiries(true);
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/messages/listing/${listingId}/inquiries`,
+          {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch inquiries');
+        }
+
+        const data = await response.json();
+        setInquiries(data);
+      } catch (err) {
+        console.error('Error fetching inquiries:', err);
+      } finally {
+        setIsLoadingInquiries(false);
+      }
+    };
+
+    if (showInquiries) {
+      fetchInquiries();
+    }
+  }, [isOwner, listingId, listing, user, showInquiries]);
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this listing?')) {
@@ -220,20 +259,86 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                 <p className="text-gray-600">{listing.host.occupation}</p>
               </div>
 
-              {!isOwner && (
-                <>
-                  <Button variant="primary" size="lg" className="w-full mb-4">
-                    Contact Host
-                  </Button>
+              {isOwner ? (
+                <Button
+                  variant={showInquiries ? 'secondary' : 'primary'}
+                  size="lg"
+                  className="w-full mb-4"
+                  onClick={() => {
+                    setShowInquiries(!showInquiries);
+                    setShowChat(false);
+                    setSelectedInquiry(null);
+                  }}
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  {showInquiries ? 'Hide Inquiries' : 'View Inquiries'}
+                </Button>
+              ) : (
+                <Button
+                  variant={showChat ? 'secondary' : 'primary'}
+                  size="lg"
+                  className="w-full mb-4"
+                  onClick={() => setShowChat(!showChat)}
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  {showChat ? 'Hide Chat' : 'Contact Host'}
+                </Button>
+              )}
 
-                  <Button variant="outline" size="lg" className="w-full">
-                    Schedule Viewing
-                  </Button>
+              {showInquiries && isOwner && (
+                <div className="mt-6">
+                  <h4 className="font-medium mb-4">Recent Inquiries</h4>
+                  {isLoadingInquiries ? (
+                    <div className="flex justify-center py-4">
+                      <LoadingSpinner />
+                    </div>
+                  ) : inquiries.length === 0 ? (
+                    <p className="text-gray-500 text-center">No inquiries yet</p>
+                  ) : (
+                    <div className="space-y-4">
+                      {inquiries.map((inquiry) => (
+                        <div
+                          key={inquiry._id}
+                          className={`p-4 rounded-lg cursor-pointer transition-colors ${
+                            selectedInquiry?._id === inquiry._id
+                              ? 'bg-blue-50'
+                              : 'bg-gray-50 hover:bg-gray-100'
+                          }`}
+                          onClick={() => setSelectedInquiry(inquiry)}
+                        >
+                          <div className="flex items-center mb-2">
+                            <Avatar
+                              src={inquiry.sender.avatar}
+                              alt={inquiry.sender.name}
+                              size="sm"
+                            />
+                            <div className="ml-3">
+                              <p className="font-medium">{inquiry.sender.name}</p>
+                              <p className="text-sm text-gray-500">
+                                {inquiry.sender.occupation}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-sm text-gray-600 line-clamp-2">
+                            {inquiry.content}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-2">
+                            {new Date(inquiry.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
 
-                  <p className="text-sm text-gray-500 text-center mt-4">
-                    Usually responds within 24 hours
-                  </p>
-                </>
+              {((showChat && !isOwner) || (selectedInquiry && isOwner)) && (
+                <div className="mt-6">
+                  <ChatWindow
+                    otherUser={isOwner ? selectedInquiry!.sender : listing.host}
+                    listingId={listingId}
+                  />
+                </div>
               )}
             </div>
           </div>
