@@ -8,11 +8,11 @@ dotenv.config();
 
 const sampleUsers = [
   {
-    name: 'John Smith',
-    email: 'john@example.com',
+    name: 'Selin Uygun',
+    email: 'selin@example.com',
     password: 'password123',
-    gender: 'male',
-    phone: '+1234567890',
+    gender: 'female',
+    phone: '+905356708090',
     occupation: 'Software Engineer',
     bio: 'Tech enthusiast, clean and organized',
     preferences: {
@@ -22,11 +22,11 @@ const sampleUsers = [
     }
   },
   {
-    name: 'Emma Wilson',
-    email: 'emma@example.com',
+    name: 'Kris Manakyan',
+    email: 'kris@example.com',
     password: 'password123',
-    gender: 'female',
-    phone: '+1234567891',
+    gender: 'male',
+    phone: '+905053807800',
     occupation: 'Graduate Student',
     bio: 'PhD student in Biology, early bird',
     preferences: {
@@ -55,7 +55,7 @@ const sampleListings = [
   {
     title: 'Modern Room in Downtown Apartment',
     description: 'Bright and spacious room in a newly renovated apartment. Walking distance to public transport and restaurants.',
-    location: 'Downtown, Istanbul',
+    location: 'Beşiktaş, İstanbul',
     price: 2500,
     images: [
       'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3',
@@ -76,7 +76,7 @@ const sampleListings = [
   {
     title: 'Cozy Room in Student Area',
     description: 'Perfect for students! Shared apartment near university campus with great study environment.',
-    location: 'University District, Istanbul',
+    location: 'Fatih, İstanbul',
     price: 1800,
     images: [
       'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixlib=rb-4.0.3',
@@ -97,7 +97,7 @@ const sampleListings = [
   {
     title: 'Artist Loft Share in Creative District',
     description: 'Share a beautiful loft space with creative professionals. Perfect for artists and designers.',
-    location: 'Arts District, Istanbul',
+    location: 'Altındağ, Ankara',
     price: 3000,
     images: [
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3',
