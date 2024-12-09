@@ -14,7 +14,7 @@ import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import type { FilterOptions, Listing } from './types';
 
 const initialFilters: FilterOptions = {
-  priceRange: [0, 5000],
+  priceRange: [0, 50000],
   roomType: [],
   location: '',
   preferences: {
