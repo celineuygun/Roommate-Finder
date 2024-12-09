@@ -79,7 +79,8 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
         throw new Error('Failed to update listing');
       }
 
-      window.location.href = `/listing/${listingId}`;
+      
+      window.location.href = `/profile`;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update listing');
     } finally {
