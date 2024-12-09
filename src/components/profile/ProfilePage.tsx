@@ -41,10 +41,15 @@ export function ProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <a href="/" className="text-2xl font-bold text-blue-600">
+      <header className="sticky top-0 z-40 bg-white border-b border-gray-200w">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <a href="/" className="flex items-center text-2xl font-bold text-blue-600">
+              <img 
+                  src="src/components/img/site-icon.png" 
+                  alt="Site Icon" 
+                  className="w-8 h-8 mr-2"
+                />
               RoommateFinder
             </a>
             <div className="flex items-center space-x-4">
@@ -65,10 +70,12 @@ export function ProfilePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Information */}
           <div className="lg:col-span-1">
+          <div className="sticky top-24">
             <ProfileInfo
               user={profileData}
               onUpdateProfile={updateProfile}
             />
+            </div>
           </div>
 
           {/* User Listings */}
