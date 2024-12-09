@@ -146,7 +146,7 @@ export function NewListingForm() {
           <div className="flex justify-between items-center h-16">
             <a href="/" className="flex items-center text-2xl font-bold text-blue-600">
             <img 
-                src="src/components/img/site-icon.png" 
+                src="/site-icon.png" 
                 alt="Site Icon" 
                 className="w-8 h-8 mr-2"
               />
