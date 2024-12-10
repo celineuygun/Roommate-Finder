@@ -6,6 +6,7 @@ import { UserListings } from './UserListings';
 import { useProfile } from '../../hooks/useProfile';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { ChatPortal } from '../chat/ChatPortal';
 
 export function ProfilePage() {
   const { logout } = useAuth();
@@ -84,6 +85,7 @@ export function ProfilePage() {
           </div>
         </div>
       </main>
+      <ChatPortal/>
     </div>
   );
 }

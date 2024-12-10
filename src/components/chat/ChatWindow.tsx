@@ -142,7 +142,6 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton}: Chat
           <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
           <div className="text-center">
             <h3 className="font-medium text-gray-900">{otherUser.name}</h3>
-            <p className="text-sm text-gray-500">{otherUser.occupation}</p>
           </div>
         </div>
 

@@ -8,6 +8,7 @@ import { ImageSlider } from './ImageSlider';
 import { ChatWindow } from '../chat/ChatWindow';
 import { useAuth } from '../../contexts/AuthContext';
 import type { Listing, Message } from '../../types';
+import { ChatPortal } from '../chat/ChatPortal';
 
 interface ListingDetailProps {
   listingId: string;
@@ -347,6 +348,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
           </div>
         </div>
       </main>
+      <ChatPortal/>
     </div>
   );
 }
