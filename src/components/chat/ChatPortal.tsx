@@ -46,14 +46,22 @@ export function ChatPortal() {
 
   if (!user) return null;
 
+  // Tüm unread mesajları topla
+  const totalUnread = threads.reduce((sum, thread) => sum + thread.unreadCount, 0);
+
   return (
     <>
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors "
       >
         <MessageCircle className="w-6 h-6" />
+        {totalUnread > 0 && (
+          <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full">
+            {totalUnread}
+          </span>
+        )}
       </button>
 
       {/* Chat Portal */}
