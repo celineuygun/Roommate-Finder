@@ -148,28 +148,45 @@ router.put('/:id', auth, upload.array('images', 5), async (req, res) => {
       return res.status(403).json({ message: 'Not authorized to update this listing' });
     }
 
+    // Parse existingImages from the request body
+    const existingImages = JSON.parse(req.body.existingImages || '[]');
+
+    // Determine which images to delete (images not in existingImages)
+    const imagesToDelete = listing.images.filter(image => !existingImages.includes(image));
+
+    // Delete the old images that are not in existingImages
+    for (const imageUrl of imagesToDelete) {
+      try {
+        const imagePath = path.join('uploads/listings', path.basename(imageUrl));
+        await fs.unlink(imagePath); // Silme işlemi
+      } catch (err) {
+        console.error('Error deleting image file:', err);
+      }
+    }
+
     // Handle new images
-    let imageUrls = listing.images;
+    let imageUrls = existingImages; // Mevcut resimleri koruyarak başla
     if (req.files && req.files.length > 0) {
       const newImageUrls = req.files.map(file => `/uploads/listings/${file.filename}`);
-      imageUrls = [...imageUrls, ...newImageUrls];
+      imageUrls = [...imageUrls, ...newImageUrls]; // Yeni resimleri ekle
     }
 
     // Parse preferences from the request body
     const preferences = JSON.parse(req.body.preferences || '{}');
 
+    // Update the listing in the database
     const updatedListing = await Listing.findByIdAndUpdate(
       req.params.id,
       {
         ...req.body,
-        images: imageUrls,
+        images: imageUrls, // Güncellenmiş resim listesini kaydet
         preferences: {
           ...preferences,
           gender: preferences.gender || 'any',
           ageRange: preferences.ageRange || [18, 99],
-          occupation: preferences.occupation || 'any'
+          occupation: preferences.occupation || 'any',
         },
-        amenities: JSON.parse(req.body.amenities || '[]')
+        amenities: JSON.parse(req.body.amenities || '[]'),
       },
       { new: true }
     ).populate('host', 'name avatar occupation preferences');
