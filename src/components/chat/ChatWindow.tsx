@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send } from 'lucide-react';
+import { Send, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import { useAuth } from '../../contexts/AuthContext';
@@ -10,9 +10,10 @@ interface ChatWindowProps {
   otherUser: User;
   listingId: string;
   onBack: () => void;
+  showBackButton?: boolean;
 }
 
-export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
+export function ChatWindow({ otherUser, listingId, onBack, showBackButton}: ChatWindowProps) {
   const { user } = useAuth();
   const { socket } = useSocket();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -120,12 +121,26 @@ export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
   return (
     <div className="flex flex-col h-[500px] bg-white rounded-lg shadow-sm">
       {/* Chat Header */}
-      <div className="flex items-center p-4 border-b">
+      <div className="relative p-4 border-b bg-gray-100 flex justify-center items-center">
+        {/* Conditionally Render Back Button */}
+        {showBackButton && (
+        <button
+          onClick={onBack}
+          className="absolute left-4 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Back
+        </button>
+        )}
+
+        {/* Avatar and Contact Info */}
+        <div className="flex flex-col items-center justify-center mx-auto">
         <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
-        <div className="ml-3">
-          <h3 className="font-medium">{otherUser.name}</h3>
+        <div className="text-center">
+          <h3 className="font-medium text-gray-900">{otherUser.name}</h3>
           <p className="text-sm text-gray-500">{otherUser.occupation}</p>
         </div>
+      </div>
       </div>
 
       {/* Messages */}

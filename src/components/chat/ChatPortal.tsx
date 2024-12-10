@@ -77,6 +77,7 @@ export function ChatPortal() {
                 otherUser={selectedThread.otherUser}
                 listingId={selectedThread.listing._id}
                 onBack={() => setSelectedThread(null)}
+                showBackButton={true}
               />
             ) : (
               <div className="h-full overflow-y-auto">
