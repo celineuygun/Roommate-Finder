@@ -10,6 +10,8 @@ import { SignInForm } from './components/auth/SignInForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ProfilePage } from './components/profile/ProfilePage';
 import { EmailVerification } from './components/email/EmailVerification';
+import { ChatPortal } from './components/chat/ChatPortal';
+import { useAuth } from './contexts/AuthContext';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import type { FilterOptions, Listing } from './types';
 
@@ -28,6 +30,7 @@ const initialFilters: FilterOptions = {
 };
 
 export default function App() {
+  const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState<FilterOptions>(initialFilters);
   const [listings, setListings] = useState<Listing[]>([]);
   const [filteredListings, setFilteredListings] = useState<Listing[]>([]);
@@ -238,6 +241,7 @@ export default function App() {
           </div>
         </div>
       </main>
+      {isAuthenticated && <ChatPortal />}
     </div>
   );
 }

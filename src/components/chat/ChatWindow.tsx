@@ -9,6 +9,7 @@ import type { Message, User } from '../../types';
 interface ChatWindowProps {
   otherUser: User;
   listingId: string;
+  onBack: () => void;
 }
 
 export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
