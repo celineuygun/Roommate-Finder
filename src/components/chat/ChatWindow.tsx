@@ -11,9 +11,10 @@ interface ChatWindowProps {
   listingId: string;
   onBack: () => void;
   showBackButton?: boolean;
+  showListingsButton?: boolean,
 }
 
-export function ChatWindow({ otherUser, listingId, onBack, showBackButton}: ChatWindowProps) {
+export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showListingsButton}: ChatWindowProps) {
   const { user } = useAuth();
   const { socket } = useSocket();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -146,13 +147,15 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton}: Chat
         </div>
 
         {/* Go to Listing Button */}
-        <button
+        {showListingsButton && (
+          <button
           onClick={handleGoToListing}
           className="absolute right-4 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
         >
           Listing
           <Home className="w-5 h-5 ml-2" />
         </button>
+        )}
       </div>
 
       {/* Messages */}
