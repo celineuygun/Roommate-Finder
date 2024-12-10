@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, Phone, Briefcase } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { Modal } from '../ui/Modal';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface RegisterFormData {
@@ -37,6 +38,7 @@ export function RegisterForm() {
   const [formData, setFormData] = useState<RegisterFormData>(INITIAL_FORM_STATE);
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,15 +59,19 @@ export function RegisterForm() {
 
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
-      }
+      } 
 
-      login(data.token, data.user);
-      window.location.href = '/';
+      setIsModalVisible(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleRedirect = () => {
+    setIsModalVisible(false);
+    window.location.href = '/signin'; // Redirect on confirm
   };
 
   return (
@@ -75,7 +81,7 @@ export function RegisterForm() {
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-center items-center">
           <a href="/" className="flex items-center text-2xl font-bold text-blue-600">
           <img 
-                src="src/components/img/site-icon.png" 
+                src="/site-icon.png" 
                 alt="Site Icon" 
                 className="w-8 h-8 mr-2"
               />
@@ -321,6 +327,14 @@ export function RegisterForm() {
           </form>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onConfirm={handleRedirect} // Pass redirection handler
+        message="Registration successful! Please check your email to verify your account."
+      />
     </div>
   );
 }

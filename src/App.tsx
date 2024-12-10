@@ -9,11 +9,12 @@ import { SearchFilters } from './components/search/SearchFilters';
 import { SignInForm } from './components/auth/SignInForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ProfilePage } from './components/profile/ProfilePage';
+import { EmailVerification } from './components/email/EmailVerification';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import type { FilterOptions, Listing } from './types';
 
 const initialFilters: FilterOptions = {
-  priceRange: [0, 5000],
+  priceRange: [0, 50000],
   roomType: [],
   location: '',
   preferences: {
@@ -33,6 +34,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [verificationMessage, setVerificationMessage] = useState('');
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -127,6 +129,30 @@ export default function App() {
     setFilteredListings(result);
   }, [searchTerm, filters, listings]);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    
+    if (token) {
+      fetch(`http://localhost:3000/api/auth/verify-email?token=${token}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setVerificationMessage(data.message || 'Verifying email...');
+          if (data.message === 'Email successfully verified.') {
+            // Redirect to the Sign-In page after a brief delay
+            setTimeout(() => {
+              window.location.href = '/signin';
+            }, 2000);
+          }
+        })
+        .catch(() => {
+          setVerificationMessage('An error occurred while verifying your email.');
+        });
+    } else {
+      setVerificationMessage('Invalid verification token.');
+    }
+  }, []);
+
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
@@ -135,6 +161,7 @@ export default function App() {
   const path = window.location.pathname;
   const listingMatch = path.match(/^\/listing\/(.+)$/);
   const editListingMatch = path.match(/^\/listing\/(.+)\/edit$/);
+  const verificationMatch = path.match(/^\/auth\/verify-email$/);
 
   if (editListingMatch) {
     const listingId = editListingMatch[1];
@@ -161,6 +188,20 @@ export default function App() {
   if (path === '/new-listing') {
     return <NewListingForm />;
   }
+
+  if (path === '/auth/verify-email') {
+    return <EmailVerification/>;
+  }
+  
+  if (verificationMatch) {
+    return (
+      <div>
+        <h1>Email Verification</h1>
+        <p>{verificationMessage || 'Verifying email...'}</p>
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-50">

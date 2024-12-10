@@ -38,7 +38,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
   const handleClear = () => {
     setSelectedCity('');
     onFilterChange({
-      priceRange: [0, 5000],
+      priceRange: [0, 50000],
       roomType: [],
       location: '',
       preferences: {

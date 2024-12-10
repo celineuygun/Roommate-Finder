@@ -19,7 +19,8 @@ const sampleUsers = [
       smoking: false,
       pets: true,
       nightLife: true
-    }
+    },
+    isVerified: true,
   },
   {
     name: 'Kris Manakyan',
@@ -33,7 +34,8 @@ const sampleUsers = [
       smoking: false,
       pets: false,
       nightLife: false
-    }
+    },
+    isVerified: true,
   },
   {
     name: 'Alex Chen',
@@ -47,7 +49,8 @@ const sampleUsers = [
       smoking: true,
       pets: true,
       nightLife: true
-    }
+    },
+    isVerified: true,
   }
 ];
 

@@ -106,6 +106,16 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Serve static files from the dist folder
+const distPath = path.join(__dirname, '../dist');
+app.use(express.static(distPath));
+
+// Redirect all non-API routes to React's index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
+
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
