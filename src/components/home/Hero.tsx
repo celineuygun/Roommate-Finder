@@ -45,8 +45,7 @@ export function Hero({ onSearch }: HeroProps) {
               className="flex-1 border-0 focus:ring-0 px-4"
             />
             <Button type="submit" variant="primary">
-              <Search className="w-5 h-5 mr-2" />
-              Search
+              <Search className="w-6 h-6 mr-1" />
             </Button>
           </form>
         </div>
