@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, ArrowLeft } from 'lucide-react';
+import { Send, ArrowLeft, Home } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import { useAuth } from '../../contexts/AuthContext';
@@ -110,6 +110,10 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton}: Chat
     }
   };
 
+  const handleGoToListing = () => {
+    window.location.href = `/listing/${listingId}`;
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -135,12 +139,21 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton}: Chat
 
         {/* Avatar and Contact Info */}
         <div className="flex flex-col items-center justify-center mx-auto">
-        <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
-        <div className="text-center">
-          <h3 className="font-medium text-gray-900">{otherUser.name}</h3>
-          <p className="text-sm text-gray-500">{otherUser.occupation}</p>
+          <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
+          <div className="text-center">
+            <h3 className="font-medium text-gray-900">{otherUser.name}</h3>
+            <p className="text-sm text-gray-500">{otherUser.occupation}</p>
+          </div>
         </div>
-      </div>
+
+        {/* Go to Listing Button */}
+        <button
+          onClick={handleGoToListing}
+          className="absolute right-4 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+        >
+          Listing
+          <Home className="w-5 h-5 ml-2" />
+        </button>
       </div>
 
       {/* Messages */}
