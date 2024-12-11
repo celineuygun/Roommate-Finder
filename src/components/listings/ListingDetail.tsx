@@ -271,25 +271,28 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                 <Button
                   variant={showInquiries ? 'secondary' : 'primary'}
                   size="lg"
-                  className="w-full mb-4"
+                  className="w-full mb-4 flex items-center justify-center relative"
                   onClick={() => {
                     setShowInquiries(!showInquiries);
                     setShowChat(false);
                     setSelectedInquiry(null);
                   }}
                 >
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  {showInquiries ? 'Hide Inquiries' : 'View Inquiries'}
-                </Button>
+                  {/* Simgeyi sola sabitledik */}
+                  <MessageCircle className="absolute left-4 w-6 h-6" />
+                  {/* Yazıyı ortaladık */}
+                  <span>{showInquiries ? 'Hide Inquiries' : 'View Inquiries'}</span>
+              </Button>
+              
               ) : (
                 <Button
                   variant={showChat ? 'secondary' : 'primary'}
                   size="lg"
-                  className="w-full mb-4"
+                  className="w-full mb-4 flex items-center justify-center relative"
                   onClick={() => setShowChat(!showChat)}
                 >
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  {showChat ? 'Hide Chat' : 'Contact Host'}
+                  <MessageCircle className="absolute left-6 w-6 h-6" />
+                  <span>{showChat ? 'Hide Chat' : 'Contact Host'}</span>
                 </Button>
               )}
 

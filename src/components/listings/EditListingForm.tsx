@@ -22,6 +22,9 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [location, setLocation] = useState<LocationState>({ city: '', district: '' });
   const [newAmenity, setNewAmenity] = useState('');
+  const [images, setImages] = useState<File[]>([]); // Yeni fotoğraflar
+  const [existingImages, setExistingImages] = useState<string[]>([]); // Mevcut fotoğraflar
+
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -36,6 +39,8 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
         // Parse location
         const [district, city] = data.location.split(', ');
         setLocation({ city, district });
+
+        setExistingImages(data.images || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load listing');
       } finally {
@@ -45,6 +50,19 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
     fetchListing();
   }, [listingId]);
+
+
+  const handleImagesSelected = (files: File[]) => {
+    setImages([...images, ...files]);
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveExistingImage = (imageUrl: string) => {
+    setExistingImages(existingImages.filter((img) => img !== imageUrl));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +75,10 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
       const fullLocation = `${location.district}, ${location.city}`;
       const formData = new FormData();
 
+      // Append new images
+      images.forEach((file) => {
+        formData.append('images', file);
+      });
       // Append basic listing data
       formData.append('title', listing.title);
       formData.append('description', listing.description);
@@ -66,6 +88,9 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
       formData.append('availableFrom', new Date(listing.availableFrom).toISOString());
       formData.append('amenities', JSON.stringify(listing.amenities));
       formData.append('preferences', JSON.stringify(listing.preferences));
+
+      // Append existing images to retain
+      formData.append('existingImages', JSON.stringify(existingImages));
 
       const response = await fetch(`http://localhost:3000/api/listings/${listingId}`, {
         method: 'PUT',
@@ -185,7 +210,39 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+
+          
+          
+<         form onSubmit={handleSubmit} className="space-y-6">
+            {/* Image Upload */}
+            <ImageUpload
+              onImagesSelected={handleImagesSelected}
+              onRemoveImage={handleRemoveImage}
+              maxImages={5}
+            />
+
+            {/* Existing Images */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-700 mb-2">Existing Images</h3>
+              <div className="flex gap-4 flex-wrap">
+                {existingImages.map((imageUrl, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={imageUrl}
+                      alt="Existing Listing"
+                      className="w-20 h-20 object-cover rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveExistingImage(imageUrl)}
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
             {/* Title */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
