@@ -117,7 +117,7 @@ export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
   }
 
   return (
-    <div className="flex flex-col h-[500px] bg-white dark:bg-slate-950  rounded-lg shadow-sm">
+    <div className="flex flex-col h-[500px] bg-white dark:bg-slate-950  rounded-lg shadow-sm ">
       {/* Chat Header */}
       <div className="flex items-center p-4 border-b">
         <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
@@ -155,7 +155,7 @@ export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
       </div>
 
       {/* Message Input */}
-      <div className="border-t p-4">
+      <div className="border-t p-4 text-gray-700">
         <div className="flex space-x-2">
           <textarea
             value={newMessage}

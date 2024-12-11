@@ -135,22 +135,30 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back
-          </button>
-          <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
-          <img 
-                src="/site-icon.png" 
-                alt="Site Icon" 
-                className="w-8 h-8 mr-2"
-              />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
+            {/* Back Button - Hidden on Small Screens */}
+            <button
+              onClick={() => window.history.back()}
+              className="hidden md:flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back
+            </button>
+            
+            {/* Logo */}
+            <a
+              href="/"
+              className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200 
+                        md:absolute md:left-1/2 md:transform md:-translate-x-1/2 " 
+            >
+            <img 
+              src="/site-icon.png" 
+              alt="Site Icon" 
+              className="w-8 h-8 mr-2"
+            />
             RoommateFinder
           </a>
+            {/* Action Buttons */}
             <div className="flex items-center space-x-4">
               {isOwner ? (
                 <>

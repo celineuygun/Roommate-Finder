@@ -181,7 +181,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
           <button
             onClick={() => window.history.back()}
-            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
+            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back
