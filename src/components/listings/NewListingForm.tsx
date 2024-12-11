@@ -139,12 +139,12 @@ export function NewListingForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 ">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-200w">
+      <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <a href="/" className="flex items-center text-2xl font-bold text-blue-600">
+          <div className="flex justify-center items-center h-16">
+            <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
             <img 
                 src="/site-icon.png" 
                 alt="Site Icon" 
@@ -157,13 +157,13 @@ export function NewListingForm() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        <div className="bg-white dark:bg-slate-950  rounded-lg shadow-sm p-6">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
             Create New Listing
           </h1>
 
           {error && (
-            <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
               {error}
             </div>
           )}
@@ -178,7 +178,7 @@ export function NewListingForm() {
 
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Title
               </label>
               <input
@@ -193,12 +193,12 @@ export function NewListingForm() {
 
             {/* Location Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Location
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <MapPin className="absolute left-3 top-2.5 h-5 w-5" />
                   <select
                     value={location.city}
                     onChange={(e) => handleCityChange(e.target.value)}
@@ -235,7 +235,7 @@ export function NewListingForm() {
 
             {/* Price */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Monthly Rent (₺)
               </label>
               <input
@@ -250,7 +250,7 @@ export function NewListingForm() {
 
             {/* Room Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Room Type
               </label>
               <select
@@ -266,7 +266,7 @@ export function NewListingForm() {
 
             {/* Available From */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Available From
               </label>
               <input
@@ -280,7 +280,7 @@ export function NewListingForm() {
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Description
               </label>
               <textarea
@@ -295,7 +295,7 @@ export function NewListingForm() {
 
             {/* Amenities */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Amenities
               </label>
               <div className="flex gap-2 mb-2">
@@ -314,7 +314,7 @@ export function NewListingForm() {
                 {formData.amenities.map((amenity) => (
                   <span
                     key={amenity}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-slate-50 text-slate-700"
                   >
                     {amenity}
                     <button
@@ -331,11 +331,11 @@ export function NewListingForm() {
 
             {/* Preferences */}
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Roommate Preferences</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Roommate Preferences</h3>
               
               {/* Gender Preference */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Preferred Gender
                 </label>
                 <select
@@ -360,7 +360,7 @@ export function NewListingForm() {
 
               {/* Age Range */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Age Range
                 </label>
                 <div className="grid grid-cols-2 gap-4">
@@ -405,7 +405,7 @@ export function NewListingForm() {
 
               {/* Occupation */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Preferred Occupation
                 </label>
                 <select
@@ -429,7 +429,7 @@ export function NewListingForm() {
               </div>
 
               {/* Lifestyle Preferences */}
-              <div className="space-y-2">
+              <div className="space-y-2 text-slate-600 dark:text-slate-300">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -444,7 +444,7 @@ export function NewListingForm() {
                         }
                       }
                     })}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 mr-2"
                   />
                   Smoking allowed
                 </label>
@@ -463,7 +463,7 @@ export function NewListingForm() {
                         }
                       }
                     })}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 mr-2"
                   />
                   Pets allowed
                 </label>
@@ -482,7 +482,7 @@ export function NewListingForm() {
                         }
                       }
                     })}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
                   Night life friendly
                 </label>

@@ -114,10 +114,10 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
 
   if (error || !listing) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-gray-100">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Error Loading Listing</h2>
-          <p className="text-gray-600">{error || 'Listing not found'}</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Error Loading Listing</h2>
+          <p className="text-gray-600 dark:text-gray-300">{error || 'Listing not found'}</p>
           <Button
             variant="primary"
             size="sm"
@@ -132,25 +132,33 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100">
       {/* Header */}
-      <header className="top-0 z-40 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <button 
-              onClick={() => window.history.back()}
-              className="flex items-center text-gray-600 hover:text-gray-900"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Listings
-            </button>
-            <div className="flex space-x-2">
+      <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+          <button
+            onClick={() => window.history.back()}
+            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back
+          </button>
+          <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
+          <img 
+                src="/site-icon.png" 
+                alt="Site Icon" 
+                className="w-8 h-8 mr-2"
+              />
+            RoommateFinder
+          </a>
+            <div className="flex items-center space-x-4">
               {isOwner ? (
                 <>
                   <Button 
-                    variant="outline" 
+                    variant="primary" 
                     size="sm"
                     onClick={() => window.location.href = `/listing/${listingId}/edit`}
+                    className="flex items-center"
                   >
                     <Edit2 className="w-4 h-4 mr-2" />
                     Edit
@@ -160,6 +168,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                     size="sm"
                     onClick={handleDelete}
                     disabled={isDeleting}
+                    className="flex items-center"
                   >
                     <Trash2 className="w-4 h-4 mr-2" />
                     {isDeleting ? 'Deleting...' : 'Delete'}
@@ -167,17 +176,16 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="flex items-center">
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="flex items-center">
                     <Heart className="w-4 h-4 mr-2" />
                     Save
                   </Button>
                 </>
               )}
-            </div>
           </div>
         </div>
       </header>
@@ -190,21 +198,21 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
             <ImageSlider images={listing.images} />
 
             {/* Listing Information */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <div className="bg-white dark:bg-slate-950  rounded-lg shadow-sm p-6">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 {listing.title}
               </h1>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-600 dark:text-gray-400">
                   <MapPin className="w-5 h-5 mr-2" />
                   <span>{listing.location}</span>
                 </div>
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-600 dark:text-gray-400">
                   <Home className="w-5 h-5 mr-2" />
                   <span className="capitalize">{listing.roomType} Room</span>
                 </div>
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-600 dark:text-gray-400">
                   <Calendar className="w-5 h-5 mr-2" />
                   <span>Available from {new Date(listing.availableFrom).toLocaleDateString()}</span>
                 </div>
@@ -212,7 +220,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
 
               <div className="border-t border-gray-200 pt-6">
                 <h2 className="text-lg font-semibold mb-4">Description</h2>
-                <p className="text-gray-600">{listing.description}</p>
+                <p className="text-gray-600 dark:text-gray-300">{listing.description}</p>
               </div>
 
               <div className="border-t border-gray-200 pt-6 mt-6">
@@ -221,9 +229,9 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                   {listing.amenities.map((amenity) => (
                     <div
                       key={amenity}
-                      className="flex items-center text-gray-600"
+                      className="flex items-center text-gray-600 dark:text-gray-400"
                     >
-                      <span className="w-2 h-2 bg-blue-600 rounded-full mr-2" />
+                      <span className="w-2 h-2 bg-blue-600 dark:bg-slate-600 rounded-full mr-2" />
                       {amenity}
                     </div>
                   ))}
@@ -240,9 +248,9 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
 
           {/* Contact and Host Info Card */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+            <div className="bg-white dark:bg-slate-950  rounded-lg shadow-sm p-6 sticky top-24">
               <div className="text-center mb-6">
-                <div className="text-3xl font-bold text-gray-900">
+                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   ₺{listing.price}
                   <span className="text-lg text-gray-500 font-normal">/month</span>
                 </div>
@@ -256,7 +264,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                   size="lg"
                 />
                 <h3 className="font-semibold text-lg mt-4">{listing.host.name}</h3>
-                <p className="text-gray-600">{listing.host.occupation}</p>
+                <p className="text-gray-600 dark:text-gray-300">{listing.host.occupation}</p>
               </div>
 
               {isOwner ? (
@@ -301,8 +309,8 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                           key={inquiry._id}
                           className={`p-4 rounded-lg cursor-pointer transition-colors ${
                             selectedInquiry?._id === inquiry._id
-                              ? 'bg-blue-50'
-                              : 'bg-gray-50 hover:bg-gray-100'
+                              ? 'bg-slate-50'
+                              : 'bg-gray-50 dark:bg-slate-900  hover:bg-gray-100'
                           }`}
                           onClick={() => setSelectedInquiry(inquiry)}
                         >
@@ -319,7 +327,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                               </p>
                             </div>
                           </div>
-                          <p className="text-sm text-gray-600 line-clamp-2">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
                             {inquiry.content}
                           </p>
                           <p className="text-xs text-gray-400 mt-2">

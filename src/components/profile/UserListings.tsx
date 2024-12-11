@@ -10,11 +10,11 @@ interface UserListingsProps {
 
 export function UserListings({ listings }: UserListingsProps) {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white dark:bg-slate-950  rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold">My Listings</h2>
         <Button 
-          variant="primary" 
+          variant="outline" 
           size="sm"
           onClick={() => window.location.href = '/new-listing'}
         >
@@ -30,8 +30,8 @@ export function UserListings({ listings }: UserListingsProps) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-600 mb-4">
+        <div className="text-center py-12 bg-gray-50 dark:bg-slate-900  rounded-lg">
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
             You haven't created any listings yet.
           </p>
           <Button

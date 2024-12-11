@@ -86,7 +86,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white dark:bg-slate-950  rounded-lg shadow p-6">
       <div className="flex justify-between items-start mb-6">
         <h2 className="text-xl font-semibold">Profile Information</h2>
         {!isEditing ? (
@@ -119,7 +119,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
       </div>
 
       {error && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+        <div className="mb-4 bg-red-50 border border-red-200 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
           {error}
         </div>
       )}
@@ -137,7 +137,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Full Name
             </label>
             {isEditing ? (
@@ -145,7 +145,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                 type="text"
                 value={editedUser.name}
                 onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border rounded-md"
+                className="mt-1 w-full px-3 py-2 border rounded-md text-gray-600"
               />
             ) : (
               <div className="mt-1 flex items-center">
@@ -156,7 +156,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Phone
             </label>
             {isEditing ? (
@@ -164,7 +164,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                 type="tel"
                 value={editedUser.phone || ''}
                 onChange={(e) => setEditedUser({ ...editedUser, phone: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border rounded-md"
+                className="mt-1 w-full px-3 py-2 border rounded-md text-gray-600"
               />
             ) : (
               <div className="mt-1 flex items-center">
@@ -175,7 +175,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Occupation
             </label>
             {isEditing ? (
@@ -183,7 +183,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                 type="text"
                 value={editedUser.occupation}
                 onChange={(e) => setEditedUser({ ...editedUser, occupation: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border rounded-md"
+                className="mt-1 w-full px-3 py-2 border rounded-md text-gray-600"
               />
             ) : (
               <div className="mt-1 flex items-center">
@@ -194,18 +194,18 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Bio
             </label>
             {isEditing ? (
               <textarea
                 value={editedUser.bio || ''}
                 onChange={(e) => setEditedUser({ ...editedUser, bio: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border rounded-md"
+                className="mt-1 w-full px-3 py-2 border rounded-md text-gray-600"
                 rows={3}
               />
             ) : (
-              <p className="mt-1 text-gray-600">{user.bio || 'No bio provided'}</p>
+              <p className="mt-1 text-gray-600 dark:text-gray-400">{user.bio || 'No bio provided'}</p>
             )}
           </div>
         </div>
@@ -220,9 +220,9 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                     type="checkbox"
                     checked={editedUser.preferences.smoking}
                     onChange={(e) => updatePreference('smoking', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
-                  <span className="text-sm text-gray-700">Smoking allowed</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Smoking allowed</span>
                 </label>
                 
                 <label className="flex items-center">
@@ -230,9 +230,9 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                     type="checkbox"
                     checked={editedUser.preferences.pets}
                     onChange={(e) => updatePreference('pets', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
-                  <span className="text-sm text-gray-700">Pet friendly</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Pet friendly</span>
                 </label>
                 
                 <label className="flex items-center">
@@ -240,25 +240,25 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                     type="checkbox"
                     checked={editedUser.preferences.nightLife}
                     onChange={(e) => updatePreference('nightLife', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
-                  <span className="text-sm text-gray-700">Night life friendly</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Night life friendly</span>
                 </label>
               </>
             ) : (
               <div className="flex flex-wrap gap-2">
                 {editedUser.preferences.smoking && (
-                  <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
+                  <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
                     Smoking allowed
                   </span>
                 )}
                 {editedUser.preferences.pets && (
-                  <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
+                  <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
                     Pet friendly
                   </span>
                 )}
                 {editedUser.preferences.nightLife && (
-                  <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
+                  <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
                     Night life friendly
                   </span>
                 )}

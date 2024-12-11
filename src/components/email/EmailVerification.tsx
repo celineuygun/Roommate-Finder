@@ -34,16 +34,16 @@ export const EmailVerification: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="flex-grow flex flex-col items-center justify-center bg-gray-50 p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome Back!</h1>
-        <p className="text-lg text-gray-600 mb-6">
+      <div className="flex-grow flex flex-col items-center justify-center bg-gray-50 dark:bg-slate-900  p-6">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-4">Welcome Back!</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
             {verificationMessage === 'Email is successfully verified.'
                 ? 'Your email is successfully verified.'
                 : verificationMessage}
         </p>
         <Button
           onClick={handleRedirect}
-          className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+          className="bg-slate-600 text-white py-2 px-4 rounded hover:bg-slate-700"
         >
           {isVerified ? 'Go to Sign In' : 'Go to Home'}
         </Button>

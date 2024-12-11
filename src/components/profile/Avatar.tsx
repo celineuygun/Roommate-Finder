@@ -33,7 +33,7 @@ export function Avatar({ src, alt, size = 'md', onUpload, isEditing = false }: A
       <img
         src={src || DEFAULT_AVATAR}
         alt={alt}
-        className={`${sizeClasses[size]} rounded-full object-cover bg-gray-100`}
+        className={`${sizeClasses[size]} rounded-full object-cover bg-gray-100 dark:bg-gray-800`}
       />
       
       {isEditing && onUpload && (

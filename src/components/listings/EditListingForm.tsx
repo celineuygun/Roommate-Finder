@@ -132,10 +132,10 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
   if (error || !listing) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-gray-100">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Error Loading Listing</h2>
-          <p className="text-gray-600">{error || 'Listing not found'}</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Error Loading Listing</h2>
+          <p className="text-gray-600 dark:text-gray-300">{error || 'Listing not found'}</p>
           <Button
             variant="primary"
             size="sm"
@@ -150,30 +150,37 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-slate-600">
       {/* Header */}
-      <header className="top-0 z-40 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <button 
-              onClick={() => window.history.back()}
-              className="flex items-center text-gray-600 hover:text-gray-900"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Listing
-            </button>
-          </div>
+      <header className="sticky top-0 z-40 bg-white dark:bg-slate-950  border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+          <button
+            onClick={() => window.history.back()}
+            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back
+          </button>
+          <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
+          <img 
+                src="/site-icon.png" 
+                alt="Site Icon" 
+                className="w-8 h-8 mr-2"
+              />
+            RoommateFinder
+          </a>
+          <div className="w-16" /> {/* Spacer to balance layout */}
         </div>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        <div className="bg-white dark:bg-slate-950  rounded-lg shadow-sm p-6">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
             Edit Listing
           </h1>
 
           {error && (
-            <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
               {error}
             </div>
           )}
@@ -181,7 +188,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Title
               </label>
               <input
@@ -195,7 +202,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Location */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Location
               </label>
               <div className="grid grid-cols-2 gap-4">
@@ -232,7 +239,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Price */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Monthly Rent (₺)
               </label>
               <input
@@ -247,7 +254,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Room Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Room Type
               </label>
               <select
@@ -263,7 +270,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Available From */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Available From
               </label>
               <input
@@ -277,7 +284,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Description
               </label>
               <textarea
@@ -291,7 +298,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Amenities */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Amenities
               </label>
               <div className="flex gap-2 mb-2">
@@ -310,13 +317,13 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                 {listing.amenities.map((amenity) => (
                   <span
                     key={amenity}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-slate-50 text-slate-700"
                   >
                     {amenity}
                     <button
                       type="button"
                       onClick={() => removeAmenity(amenity)}
-                      className="ml-2 text-blue-500 hover:text-blue-700"
+                      className="ml-2 text-slate-500 hover:text-slate-700"
                     >
                       ×
                     </button>
@@ -327,11 +334,11 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Preferences */}
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Roommate Preferences</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Roommate Preferences</h3>
               
               {/* Gender Preference */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Preferred Gender
                 </label>
                 <select
@@ -347,7 +354,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
               {/* Age Range */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Age Range
                 </label>
                 <div className="grid grid-cols-2 gap-4">
@@ -380,7 +387,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
               {/* Occupation */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Preferred Occupation
                 </label>
                 <select
@@ -401,7 +408,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                     type="checkbox"
                     checked={listing.preferences.smoking}
                     onChange={(e) => updatePreference('smoking', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
                   Smoking allowed
                 </label>
@@ -411,7 +418,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                     type="checkbox"
                     checked={listing.preferences.pets}
                     onChange={(e) => updatePreference('pets', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
                   Pets allowed
                 </label>
@@ -421,7 +428,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                     type="checkbox"
                     checked={listing.preferences.nightLife}
                     onChange={(e) => updatePreference('nightLife', e.target.checked)}
-                    className="rounded border-gray-300 text-blue-600 mr-2"
+                    className="rounded border-gray-300 dark:border-gray-700 text-slate-600 mr-2"
                   />
                   Night life friendly
                 </label>

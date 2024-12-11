@@ -10,11 +10,11 @@ export function Header() {
   const { isAuthenticated, user, logout } = useAuth();
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-40 bg-white dark:bg-slate-950  border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <a href="/" className="flex items-center text-2xl font-bold text-blue-600">
+            <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
             <img 
                 src="/site-icon.png" 
                 alt="Site Icon" 
@@ -27,18 +27,9 @@ export function Header() {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <Button 
-                  variant="primary" 
-                  size="sm"
-                  onClick={() => window.location.href = '/new-listing'}
-                  className="flex items-center"
-                >
-                  <PlusCircle className="w-4 h-4 mr-2" />
-                  Create Listing
-                </Button>
                 <a 
                   href="/profile" 
-                  className="flex items-center text-gray-600 hover:text-gray-900"
+                  className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
                 >
                   <Avatar
                     src={user?.avatar}
@@ -48,13 +39,13 @@ export function Header() {
                   <span className="ml-2">{user?.name}</span>
                 </a>
                 <Button 
-                  variant="secondary" 
+                  variant="outline" 
                   size="sm"
-                  onClick={logout}
+                  onClick={() => window.location.href = '/new-listing'}
                   className="flex items-center"
                 >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
+                  <PlusCircle className="w-4 h-4 mr-2" />
+                  Create Listing
                 </Button>
               </>
             ) : (

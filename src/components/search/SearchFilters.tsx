@@ -63,7 +63,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm">
+    <div className="bg-white dark:bg-slate-950  p-4 rounded-lg shadow-sm text-gray-600 dark:text-gray-300">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Filters</h3>
         <Button variant="outline" size="sm" onClick={handleClear}>
@@ -75,12 +75,12 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
       <div className="space-y-6">
         {/* Location */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Location
           </label>
           <div className="space-y-2">
             <select
-              className="w-full px-3 py-2 text-sm border rounded-md"
+              className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
               value={selectedCity}
               onChange={(e) => handleCityChange(e.target.value)}
             >
@@ -92,7 +92,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
             
             {selectedCity && (
               <select
-                className="w-full px-3 py-2 text-sm border rounded-md"
+                className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 onChange={(e) => handleDistrictChange(e.target.value)}
               >
                 <option value="">Select District</option>
@@ -106,14 +106,14 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
 
         {/* Price Range */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Price Range (₺)
           </label>
           <div className="grid grid-cols-2 gap-2">
             <div className="w-full">
               <input
                 type="number"
-                className="w-full px-3 py-2 text-sm border rounded-md"
+                className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 placeholder="Min"
                 value={filters.priceRange[0]}
                 onChange={(e) =>
@@ -127,7 +127,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
             <div className="w-full">
               <input
                 type="number"
-                className="w-full px-3 py-2 text-sm border rounded-md"
+                className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 placeholder="Max"
                 value={filters.priceRange[1]}
                 onChange={(e) =>
@@ -143,7 +143,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
 
         {/* Room Type */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Room Type
           </label>
           <div className="space-y-2">
@@ -151,7 +151,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
               <label key={type} className="flex items-center">
                 <input
                   type="checkbox"
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="rounded border-gray-300 dark:border-gray-700 text-state-600 focus:ring-state-500 text-gray-600"
                   checked={filters.roomType.includes(type)}
                   onChange={(e) => {
                     const newTypes = e.target.checked
@@ -160,7 +160,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
                     onFilterChange({ ...filters, roomType: newTypes });
                   }}
                 />
-                <span className="ml-2 text-sm text-gray-700 capitalize">{type}</span>
+                <span className="ml-2 text-sm text-gray-700 dark:text-gray-300 capitalize">{type}</span>
               </label>
             ))}
           </div>
@@ -168,13 +168,13 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
 
         {/* Preferences */}
         <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2">Preferences</h4>
+          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preferences</h4>
           
           {/* Gender */}
           <div className="mb-3">
-            <label className="block text-sm text-gray-600 mb-1">Gender</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Gender</label>
             <select
-              className="w-full px-3 py-2 text-sm border rounded-md"
+              className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
               value={filters.preferences.gender}
               onChange={(e) => onFilterChange({
                 ...filters,
@@ -192,11 +192,11 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
 
           {/* Age Range */}
           <div className="mb-3">
-            <label className="block text-sm text-gray-600 mb-1">Age Range</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Age Range</label>
             <div className="grid grid-cols-2 gap-2">
               <input
                 type="number"
-                className="w-full px-3 py-2 text-sm border rounded-md"
+                className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 placeholder="Min Age"
                 min="18"
                 max="99"
@@ -211,7 +211,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
               />
               <input
                 type="number"
-                className="w-full px-3 py-2 text-sm border rounded-md"
+                className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 placeholder="Max Age"
                 min="18"
                 max="99"
@@ -229,9 +229,9 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
 
           {/* Occupation */}
           <div className="mb-3">
-            <label className="block text-sm text-gray-600 mb-1">Occupation</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Occupation</label>
             <select
-              className="w-full px-3 py-2 text-sm border rounded-md"
+              className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
               value={filters.preferences.occupation}
               onChange={(e) => onFilterChange({
                 ...filters,
@@ -253,11 +253,11 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
               <label key={key} className="flex items-center">
                 <input
                   type="checkbox"
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="rounded border-gray-300 dark:border-gray-700 text-state-600 focus:ring-state-500"
                   checked={filters.preferences[key] === true}
                   onChange={(e) => handleLifestyleChange(key, e.target.checked)}
                 />
-                <span className="ml-2 text-sm text-gray-700">{label}</span>
+                <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">{label}</span>
               </label>
             ))}
           </div>

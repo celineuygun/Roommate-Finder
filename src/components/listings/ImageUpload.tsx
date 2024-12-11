@@ -56,7 +56,7 @@ export function ImageUpload({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-medium text-gray-700">Images</h3>
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Images</h3>
           <p className="text-sm text-gray-500">
             Add up to {maxImages} images of your space
           </p>
@@ -75,7 +75,7 @@ export function ImageUpload({
       </div>
 
       {error && (
-        <div className="text-sm text-red-600">
+        <div className="text-sm text-red-600 dark:text-red-400">
           {error}
         </div>
       )}
@@ -100,9 +100,9 @@ export function ImageUpload({
             <button
               type="button"
               onClick={() => handleRemove(index)}
-              className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-md hover:bg-gray-100"
+              className="absolute top-2 right-2 p-1 bg-white dark:bg-slate-950  rounded-full shadow-md hover:bg-gray-100"
             >
-              <X className="w-4 h-4 text-gray-600" />
+              <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
             </button>
           </div>
         ))}

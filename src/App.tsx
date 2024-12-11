@@ -9,9 +9,12 @@ import { SearchFilters } from './components/search/SearchFilters';
 import { SignInForm } from './components/auth/SignInForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ProfilePage } from './components/profile/ProfilePage';
+import { SettingsPage } from './components/settings/SettingsPage';
 import { EmailVerification } from './components/email/EmailVerification';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import type { FilterOptions, Listing } from './types';
+import { DarkModeProvider } from './contexts/DarkModeContext';
+import { Settings } from 'lucide-react';
 
 const initialFilters: FilterOptions = {
   priceRange: [0, 50000],
@@ -163,81 +166,63 @@ export default function App() {
   const editListingMatch = path.match(/^\/listing\/(.+)\/edit$/);
   const verificationMatch = path.match(/^\/auth\/verify-email$/);
 
-  if (editListingMatch) {
-    const listingId = editListingMatch[1];
-    return <EditListingForm listingId={listingId} />;
-  }
-
-  if (listingMatch) {
-    const listingId = listingMatch[1];
-    return <ListingDetail listingId={listingId} />;
-  }
-
-  if (path === '/signin') {
-    return <SignInForm />;
-  }
-
-  if (path === '/register') {
-    return <RegisterForm />;
-  }
-
-  if (path === '/profile') {
-    return <ProfilePage />;
-  }
-
-  if (path === '/new-listing') {
-    return <NewListingForm />;
-  }
-
-  if (path === '/auth/verify-email') {
-    return <EmailVerification/>;
-  }
-  
-  if (verificationMatch) {
-    return (
-      <div>
-        <h1>Email Verification</h1>
-        <p>{verificationMessage || 'Verifying email...'}</p>
-      </div>
-    );
-  }
-
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <Hero onSearch={handleSearch} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-1">
-            <SearchFilters
-              filters={filters}
-              onFilterChange={setFilters}
-            />
+      <DarkModeProvider>
+        {editListingMatch ? (
+          <EditListingForm listingId={editListingMatch[1]} />
+        ) : listingMatch ? (
+          <ListingDetail listingId={listingMatch[1]} />
+        ) : path === '/signin' ? (
+          <SignInForm />
+        ) : path === '/register' ? (
+          <RegisterForm />
+        ) : path === '/profile' ? (
+          <ProfilePage />
+        ) : path === '/settings' ? (
+          <SettingsPage />
+        ) : path === '/new-listing' ? (
+          <NewListingForm />
+        ) : path === '/auth/verify-email' ? (
+          <EmailVerification />
+        ) : verificationMatch ? (
+          <div>
+            <h1>Email Verification</h1>
+            <p>{verificationMessage || 'Verifying email...'}</p>
           </div>
-          <div className="lg:col-span-3">
-            {isLoading ? (
-              <div className="flex justify-center py-12">
-                <LoadingSpinner />
+        ) : (
+          <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100">
+            <Header />
+            <Hero onSearch={handleSearch} />
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <div className="lg:col-span-1">
+                  <SearchFilters filters={filters} onFilterChange={setFilters} />
+                </div>
+                <div className="lg:col-span-3">
+                  {isLoading ? (
+                    <div className="flex justify-center py-12">
+                      <LoadingSpinner />
+                    </div>
+                  ) : error ? (
+                    <div className="text-center py-12">
+                      <p className="text-red-600 dark:text-red-400">{error}</p>
+                    </div>
+                  ) : filteredListings.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-gray-600 dark:text-gray-300">No listings found matching your criteria.</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {filteredListings.map((listing) => (
+                        <ListingCard key={listing._id} listing={listing} />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            ) : error ? (
-              <div className="text-center py-12">
-                <p className="text-red-600">{error}</p>
-              </div>
-            ) : filteredListings.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-600">No listings found matching your criteria.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredListings.map((listing) => (
-                  <ListingCard key={listing._id} listing={listing} />
-                ))}
-              </div>
-            )}
+            </main>
           </div>
-        </div>
-      </main>
-    </div>
+        )}
+      </DarkModeProvider>
   );
 }

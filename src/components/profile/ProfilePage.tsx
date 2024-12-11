@@ -1,6 +1,7 @@
 import React from 'react';
 import { Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { SettingsPage } from '../settings/SettingsPage';
 import { ProfileInfo } from './ProfileInfo';
 import { UserListings } from './UserListings';
 import { useProfile } from '../../hooks/useProfile';
@@ -21,10 +22,10 @@ export function ProfilePage() {
 
   if (error || !profileData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-gray-100">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Error Loading Profile</h2>
-          <p className="text-gray-600">{error || 'Failed to load profile data'}</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Error Loading Profile</h2>
+          <p className="text-gray-600 dark:text-gray-300">{error || 'Failed to load profile data'}</p>
           <Button
             variant="primary"
             size="sm"
@@ -39,12 +40,12 @@ export function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-200w">
+      <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <a href="/" className="flex items-center text-2xl font-bold text-blue-600">
+            <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
               <img 
                   src="/site-icon.png" 
                   alt="Site Icon" 
@@ -53,11 +54,21 @@ export function ProfilePage() {
               RoommateFinder
             </a>
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
+              <Button 
+                  variant="primary" 
+                  size="sm"
+                  onClick={() => window.location.href = '/settings'}
+                  className="flex items-center"
+                >
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
-              <Button variant="secondary" size="sm" onClick={logout}>
+              <Button 
+                  variant="secondary" 
+                  size="sm"
+                  onClick={logout}
+                  className="flex items-center"
+                >
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </Button>

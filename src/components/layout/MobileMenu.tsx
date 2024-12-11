@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, LogIn, UserPlus, LogOut, User, PlusCircle } from 'lucide-react';
+import { X, LogIn, UserPlus, LogOut, User, PlusCircle, Settings } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import type { User as UserType } from '../../types';
@@ -19,7 +19,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
     <div className="fixed inset-0 z-50 lg:hidden">
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
       
-      <div className="fixed right-0 top-0 bottom-0 w-64 bg-white">
+      <div className="fixed right-0 top-0 bottom-0 w-64 bg-white dark:bg-slate-950 flex flex-col">
         <div className="p-4 flex justify-end">
           <button onClick={onClose}>
             <X className="h-6 w-6 text-gray-500" />
@@ -49,19 +49,19 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
                 variant="primary" 
                 size="sm" 
                 className="w-full flex items-center justify-center"
-                onClick={() => window.location.href = '/new-listing'}
+                onClick={() => window.location.href = '/profile'}
               >
-                <PlusCircle className="w-4 h-4 mr-2" />
-                Create Listing
+                <User className="w-4 h-4 mr-2" />
+                Profile
               </Button>
               <Button 
                 variant="outline" 
                 size="sm" 
                 className="w-full flex items-center justify-center"
-                onClick={() => window.location.href = '/profile'}
+                onClick={() => window.location.href = '/new-listing'}
               >
-                <User className="w-4 h-4 mr-2" />
-                Profile
+                <PlusCircle className="w-4 h-4 mr-2" />
+                Create Listing
               </Button>
               <Button 
                 variant="secondary" 
@@ -96,6 +96,20 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
             </>
           )}
         </div>
+        {/* Settings Button at the Bottom */}
+        {isAuthenticated && (
+          <div className="p-4 border-t border-gray-200 mt-auto">
+            <Button 
+              variant="primary" 
+              size="sm"
+              className="w-full flex items-center justify-center"
+              onClick={() => window.location.href = '/settings'}
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              Settings
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

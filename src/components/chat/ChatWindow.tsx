@@ -111,13 +111,13 @@ export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-[500px] bg-white rounded-lg shadow-sm">
+    <div className="flex flex-col h-[500px] bg-white dark:bg-slate-950  rounded-lg shadow-sm">
       {/* Chat Header */}
       <div className="flex items-center p-4 border-b">
         <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
@@ -139,8 +139,8 @@ export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
               <div
                 className={`max-w-[70%] rounded-lg px-4 py-2 ${
                   isOwnMessage
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-900'
+                    ? 'bg-slate-600 text-white'
+                    : 'bg-gray-100 text-gray-900 dark:text-gray-100'
                 }`}
               >
                 <p className="text-sm">{message.content}</p>
@@ -162,7 +162,7 @@ export function ChatWindow({ otherUser, listingId }: ChatWindowProps) {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type a message..."
-            className="flex-1 resize-none border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 resize-none border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-slate-500"
             rows={1}
           />
           <Button
