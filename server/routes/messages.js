@@ -3,8 +3,80 @@ import mongoose from 'mongoose';
 import auth from '../middleware/auth.js';
 import Message from '../models/Message.js';
 import Listing from '../models/Listing.js';
+import User from '../models/User.js';
 
 const router = express.Router();
+
+// Get all chat threads for the current user
+router.get('/threads', auth, async (req, res) => {
+  try {
+    const messages = await Message.aggregate([
+      {
+        $match: {
+          $or: [
+            { sender: new mongoose.Types.ObjectId(req.user.userId) },
+            { receiver: new mongoose.Types.ObjectId(req.user.userId) }
+          ]
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $group: {
+          _id: {
+            listing: '$listing',
+            otherUser: {
+              $cond: {
+                if: { $eq: ['$sender', new mongoose.Types.ObjectId(req.user.userId)] },
+                then: '$receiver',
+                else: '$sender'
+              }
+            }
+          },
+          lastMessage: { $first: '$$ROOT' },
+          unreadCount: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $eq: ['$receiver', new mongoose.Types.ObjectId(req.user.userId)] },
+                    { $eq: ['$read', false] }
+                  ]
+                },
+                1,
+                0
+              ]
+            }
+          }
+        }
+      }
+    ]);
+
+    const threads = await Promise.all(
+      messages.map(async (thread) => {
+        const [listing, otherUser] = await Promise.all([
+          Listing.findById(thread._id.listing)
+            .select('title images location price'),
+          User.findById(thread._id.otherUser)
+            .select('name avatar occupation')
+        ]);
+
+        return {
+          listing,
+          otherUser,
+          lastMessage: thread.lastMessage,
+          unreadCount: thread.unreadCount
+        };
+      })
+    );
+
+    res.json(threads);
+  } catch (error) {
+    console.error('Error fetching threads:', error);
+    res.status(500).json({ message: 'Error fetching threads' });
+  }
+});
 
 // Get chat history for a specific listing and user
 router.get('/:listingId/:userId', auth, async (req, res) => {

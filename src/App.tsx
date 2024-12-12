@@ -11,6 +11,8 @@ import { RegisterForm } from './components/auth/RegisterForm';
 import { ProfilePage } from './components/profile/ProfilePage';
 import { SettingsPage } from './components/settings/SettingsPage';
 import { EmailVerification } from './components/email/EmailVerification';
+import { ChatPortal } from './components/chat/ChatPortal';
+import { useAuth } from './contexts/AuthContext';
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import type { FilterOptions, Listing } from './types';
 import { DarkModeProvider } from './contexts/DarkModeContext';
@@ -31,6 +33,7 @@ const initialFilters: FilterOptions = {
 };
 
 export default function App() {
+  const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState<FilterOptions>(initialFilters);
   const [listings, setListings] = useState<Listing[]>([]);
   const [filteredListings, setFilteredListings] = useState<Listing[]>([]);
@@ -219,9 +222,10 @@ export default function App() {
                     </div>
                   )}
                 </div>
-              </div>
-            </main>
-          </div>
+                </div>
+             </main>
+              {isAuthenticated && <ChatPortal />}
+            </div>
         )}
       </DarkModeProvider>
   );
