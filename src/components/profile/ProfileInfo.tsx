@@ -40,12 +40,15 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
       });
 
       if (!response.ok) {
+        const respText = await response.text();
+        console.error('Avatar upload error response:', respText);
         throw new Error('Failed to upload avatar');
       }
 
       const data = await response.json();
       setEditedUser({ ...editedUser, avatar: data.avatar });
     } catch (err) {
+      console.error('Avatar upload error:', err);
       setError(err instanceof Error ? err.message : 'Failed to upload avatar');
     } finally {
       setIsLoading(false);

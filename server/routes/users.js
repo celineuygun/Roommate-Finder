@@ -3,8 +3,31 @@ import auth from '../middleware/auth.js';
 import User from '../models/User.js';
 import Listing from '../models/Listing.js'
 import Message from '../models/Message.js';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
 
 const router = express.Router();
+
+// Avatar yükleme için multer ayarları
+// Burada diskStorage kullanarak dosyayı 'uploads/avatars' klasörüne kaydediyoruz.
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(process.cwd(), 'uploads', 'avatars');
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    // Benzersiz isim için zaman damgası + orijinal isim
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
+const upload = multer({ storage });
 
 // Get user profile with listings
 router.get('/profile', auth, async (req, res) => {
@@ -41,6 +64,34 @@ router.put('/profile', auth, async (req, res) => {
 
     res.json(user);
   } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Yeni Avatar Yükleme Endpoint'i
+router.post('/avatar', auth, upload.single('avatar'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file provided' });
+    }
+
+    // Kaydedilen dosyanın yolunu elde edelim
+    const avatarUrl = `http://localhost:3000/uploads/avatars/${req.file.filename}`;
+
+    // Kullanıcının avatar alanını güncelle
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      { $set: { avatar: avatarUrl } },
+      { new: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'Avatar updated successfully', avatar: user.avatar });
+  } catch (error) {
+    console.error('Error uploading avatar:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
