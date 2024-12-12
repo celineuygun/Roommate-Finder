@@ -54,7 +54,7 @@ export function ChatPortal() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors "
+        className="fixed bottom-4 right-4 text-gray-50 dark:text-gray-900 bg-blue-600 dark:bg-slate-300 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 dark:hover:bg-slate-800 dark:hover:text-gray-50 transition-colors "
       >
         <MessageCircle className="w-6 h-6" />
         {totalUnread > 0 && (
@@ -66,13 +66,13 @@ export function ChatPortal() {
 
       {/* Chat Portal */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 w-96 bg-white rounded-lg shadow-xl">
+        <div className="fixed bottom-20 right-4 w-96 bg-white dark:bg-gray-700 rounded-lg shadow-xl text-gray-900 dark:text-gray-100">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="font-semibold text-lg">Messages</h2>
+          <div className="flex items-center justify-between p-4 bg-blue-600 dark:bg-slate-800">
+            <h2 className="font-semibold text-lg text-gray-50">Messages</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-50 hover:text-gray-300"
             >
               <X className="w-5 h-5" />
             </button>
@@ -92,7 +92,7 @@ export function ChatPortal() {
               <div className="h-full overflow-y-auto">
                 {isLoading ? (
                   <div className="flex items-center justify-center h-full">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-blue-600 dark:border-slate-600"></div>
                   </div>
                 ) : threads.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-gray-500">
@@ -100,12 +100,12 @@ export function ChatPortal() {
                     <p>No messages yet</p>
                   </div>
                 ) : (
-                  <div className="divide-y">
+                  <div className="divide-y dark:hover:text-gray-100">
                     {threads.map((thread) => (
                       <button
                         key={`${thread.listing._id}-${thread.otherUser._id}`}
                         onClick={() => setSelectedThread(thread)}
-                        className="w-full p-4 hover:bg-gray-50 flex items-start space-x-3 text-left"
+                        className="w-full p-4 hover:bg-gray-50 dark:hover:bg-gray-900 flex items-start space-x-3 text-left"
                       >
                         <Avatar
                           src={thread.otherUser.avatar}
@@ -118,15 +118,15 @@ export function ChatPortal() {
                               {thread.otherUser.name}
                             </h3>
                             {thread.unreadCount > 0 && (
-                              <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                              <span className="bg-blue-600 dark:bg-slate-600 text-white text-xs px-2 py-1 rounded-full">
                                 {thread.unreadCount}
                               </span>
                             )}
                           </div>
-                          <p className="text-sm text-gray-500 truncate">
+                          <p className="text-sm truncate">
                             {thread.lastMessage.content}
                           </p>
-                          <div className="flex items-center mt-1 text-xs text-gray-500">
+                          <div className="flex items-center mt-1 text-xs text-opacity-50">
                             <Home className="w-3 h-3 mr-1" />
                             <span className="truncate">{thread.listing.title}</span>
                           </div>

@@ -321,8 +321,8 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                           key={inquiry._id}
                           className={`p-4 rounded-lg cursor-pointer transition-colors ${
                             selectedInquiry?._id === inquiry._id
-                              ? 'bg-slate-50'
-                              : 'bg-gray-50 dark:bg-slate-900  hover:bg-gray-100'
+                              ? 'bg-blue-50 dark:bg-slate-300 dark:text-gray-600'
+                              : 'bg-gray-50 dark:text-gray-400 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800'
                           }`}
                           onClick={() => setSelectedInquiry(inquiry)}
                         >
@@ -339,10 +339,10 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                               </p>
                             </div>
                           </div>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                          <p className="text-sm line-clamp-2">
                             {inquiry.content}
                           </p>
-                          <p className="text-xs text-gray-400 mt-2">
+                          <p className="text-xs text-gray-500 mt-2">
                             {new Date(inquiry.createdAt).toLocaleDateString()}
                           </p>
                         </div>
@@ -353,7 +353,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
               )}
 
               {((showChat && !isOwner) || (selectedInquiry && isOwner)) && (
-                <div className="mt-6">
+                <div className="mt-6 rounded-lg shadow-md">
                   <ChatWindow
                     otherUser={isOwner ? selectedInquiry!.sender : listing.host}
                     listingId={listingId}

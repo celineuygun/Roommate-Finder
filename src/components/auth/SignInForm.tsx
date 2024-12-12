@@ -64,7 +64,7 @@ export function SignInForm() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
               Don't have an account?{' '}
-              <a href="/register" className="font-medium text-blue-600 dark:text-blue-300 hover:text-blue-600 dark:hover:text-blue-400">
+              <a href="/register" className="font-medium text-blue-600 dark:text-blue-300 hover:text-blue-500 dark:hover:text-blue-400">
                 Register here
               </a>
             </p>

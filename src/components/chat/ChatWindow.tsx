@@ -118,20 +118,20 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-slate-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-[500px] bg-white dark:bg-slate-950  rounded-lg shadow-sm ">
+    <div className="flex flex-col h-[500px] bg-white dark:bg-gray-700 rounded-lg shadow-sm text-gray-900 dark:text-gray-100">
       {/* Chat Header */}
-      <div className="relative p-4 border-b bg-gray-100 flex justify-center items-center">
+      <div className="relative p-4 bg-gray-100 dark:bg-gray-900  flex justify-center items-center">
         {/* Conditionally Render Back Button */}
         {showBackButton && (
         <button
           onClick={onBack}
-          className="absolute left-4 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+          className="absolute left-4 flex items-center text-blue-600 dark:text-slate-200 hover:text-blue-800 dark:hover:text-slate-500 font-semibold"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back
@@ -142,7 +142,7 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
         <div className="flex flex-col items-center justify-center mx-auto">
           <Avatar src={otherUser.avatar} alt={otherUser.name} size="sm" />
           <div className="text-center">
-            <h3 className="font-medium text-gray-900">{otherUser.name}</h3>
+            <h3 className="font-medium">{otherUser.name}</h3>
           </div>
         </div>
 
@@ -150,7 +150,7 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
         {showListingsButton && (
           <button
           onClick={handleGoToListing}
-          className="absolute right-4 flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+          className="absolute right-4 flex items-center text-blue-600 dark:text-slate-200 hover:text-blue-800 dark:hover:text-slate-500 font-semibold"
         >
           Listing
           <Home className="w-5 h-5 ml-2" />
@@ -170,8 +170,8 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
               <div
                 className={`max-w-[70%] rounded-lg px-4 py-2 ${
                   isOwnMessage
-                    ? 'bg-slate-600 text-white'
-                    : 'bg-gray-100 text-gray-900 dark:text-gray-100'
+                    ? 'bg-blue-600 dark:bg-slate-200 text-white dark:text-slate-950'
+                    : 'bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100'
                 }`}
               >
                 <p className="text-sm">{message.content}</p>
