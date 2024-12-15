@@ -42,7 +42,7 @@ export function Hero({ onSearch }: HeroProps) {
               placeholder="Search by location, title, or description..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 border-0 focus:ring-0 px-4"
+              className="flex-1 border-0 focus:ring-0 px-4 text-slate-600"
             />
             <Button type="submit" variant="primary">
               <Search className="w-6 h-6 mr-1" />

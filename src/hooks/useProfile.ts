@@ -57,6 +57,7 @@ export function useProfile() {
       throw new Error(err instanceof Error ? err.message : 'Failed to update profile');
     }
   };
+  
 
   return {
     isLoading,

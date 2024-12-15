@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Home, Calendar, ArrowLeft, Share2, Heart, Edit2, Trash2, MessageCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { Modal } from '../ui/Modal';
 import { Avatar } from '../profile/Avatar';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { ListingPreferences } from './ListingPreferences';
@@ -20,6 +21,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [showInquiries, setShowInquiries] = useState(false);
   const [inquiries, setInquiries] = useState<Message[]>([]);
@@ -105,6 +107,29 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
     }
   };
 
+  const handleShare = () => {
+    const shareData = {
+      title: 'Check out this listing!',
+      text: 'Take a look at this great listing I found on RoommateFinder!',
+      url: `${window.location.origin}/listing/${listingId}`,
+    };
+
+    if (navigator.share) {
+      navigator
+        .share(shareData)
+        .catch((err) => console.error('Error sharing:', err));
+    } else {
+      navigator.clipboard
+        .writeText(shareData.url)
+        .then(() => {
+          setIsModalVisible(true);
+        })
+        .catch((err) => {
+          console.error('Failed to copy the link:', err);
+        });
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -185,7 +210,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" size="sm" className="flex items-center">
+                  <Button variant="outline" size="sm" onClick={handleShare} className="flex items-center">
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
                   </Button>
@@ -357,6 +382,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                   <ChatWindow
                     otherUser={isOwner ? selectedInquiry!.sender : listing.host}
                     listingId={listingId}
+                    onBack={() => setShowChat(false)}
                   />
                 </div>
               )}
@@ -365,6 +391,15 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
         </div>
       </main>
       <ChatPortal/>
+      
+      {/* Share Confirmation Modal */}
+      <Modal
+        isVisible={isModalVisible}
+        title="Link Copied!"
+        message={`The link has been successfully copied to your clipboard.`}
+        onClose={() => setIsModalVisible(false)}
+      />
+
     </div>
   );
 }
