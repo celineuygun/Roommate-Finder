@@ -162,13 +162,13 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
-            {/* Back Button - Hidden on Small Screens */}
+            {/* Back Button*/}
             <button
               onClick={() => window.history.back()}
-              className="hidden md:flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back
+              <ArrowLeft className="w-5 h-5 sm:mr-2" />
+              <span className="hidden sm:inline">Back</span>
             </button>
             
             {/* Logo */}
@@ -185,7 +185,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
             RoommateFinder
           </a>
             {/* Action Buttons */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               {isOwner ? (
                 <>
                   <Button 
@@ -194,8 +194,8 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                     onClick={() => window.location.href = `/listing/${listingId}/edit`}
                     className="flex items-center"
                   >
-                    <Edit2 className="w-4 h-4 mr-2" />
-                    Edit
+                    <Edit2 className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Edit</span>
                   </Button>
                   <Button 
                     variant="secondary" 
@@ -204,19 +204,21 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                     disabled={isDeleting}
                     className="flex items-center"
                   >
-                    <Trash2 className="w-4 h-4 mr-2" />
-                    {isDeleting ? 'Deleting...' : 'Delete'}
+                    <Trash2 className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">
+                      {isDeleting ? 'Deleting...' : 'Delete'}
+                    </span>
                   </Button>
                 </>
               ) : (
                 <>
                   <Button variant="outline" size="sm" onClick={handleShare} className="flex items-center">
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share
+                    <Share2 className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Share</span>
                   </Button>
                   <Button variant="outline" size="sm" className="flex items-center">
-                    <Heart className="w-4 h-4 mr-2" />
-                    Save
+                    <Heart className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Save</span>
                   </Button>
                 </>
               )}

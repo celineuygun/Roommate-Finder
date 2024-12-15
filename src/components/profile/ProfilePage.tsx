@@ -54,15 +54,15 @@ export function ProfilePage() {
                 />
               RoommateFinder
             </a>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               <Button 
                   variant="primary" 
                   size="sm"
                   onClick={() => window.location.href = '/settings'}
                   className="flex items-center"
                 >
-                <Settings className="w-4 h-4 mr-2" />
-                Settings
+                <Settings className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Settings</span>
               </Button>
               <Button 
                   variant="secondary" 
@@ -70,8 +70,8 @@ export function ProfilePage() {
                   onClick={logout}
                   className="flex items-center"
                 >
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
+                <LogOut className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Sign Out</span>
               </Button>
             </div>
           </div>

@@ -18,8 +18,8 @@ export function UserListings({ listings }: UserListingsProps) {
           size="sm"
           onClick={() => window.location.href = '/new-listing'}
         >
-          <Plus className="w-4 h-4 mr-2" />
-          Add New Listing
+          <Plus className="w-4 h-4 sm:mr-2" />
+          <span className="hidden sm:inline">Add New Listing</span>
         </Button>
       </div>
 

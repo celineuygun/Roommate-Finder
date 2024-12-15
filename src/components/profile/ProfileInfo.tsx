@@ -94,8 +94,8 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
         <h2 className="text-xl font-semibold">Profile Information</h2>
         {!isEditing ? (
           <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
-            <Edit2 className="w-4 h-4 mr-2" />
-            Edit Profile
+            <Edit2 className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Edit Profile</span>
           </Button>
         ) : (
           <div className="flex space-x-2">
@@ -128,7 +128,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
       )}
 
       <div className="space-y-6">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <Avatar
             src={editedUser.avatar}
             alt={editedUser.name}

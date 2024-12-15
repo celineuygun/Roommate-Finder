@@ -59,8 +59,8 @@ export function SettingsPage() {
             onClick={() => window.history.back()}
             className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100"
           >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back
+            <ArrowLeft className="w-5 h-5 sm:mr-2" />
+            <span className="hidden sm:inline">Save</span>
           </button>
           <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
           <img 

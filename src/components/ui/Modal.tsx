@@ -26,7 +26,7 @@ export const Modal: React.FC<ModalProps> = ({
       <div className="bg-white dark:bg-slate-950  rounded-lg shadow-lg p-6 w-96">
         <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">{title}</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-6">{message}</p>
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-end space-x-2">
           {onConfirm && (
             <button
               onClick={onConfirm}
