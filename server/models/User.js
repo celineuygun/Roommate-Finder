@@ -67,6 +67,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Listing'
   }],
+  savedListings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Listing'
+  }],
   createdAt: {
     type: Date,
     default: Date.now

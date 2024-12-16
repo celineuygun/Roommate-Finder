@@ -232,4 +232,92 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+// Save (Bookmark) a listing
+router.post('/:id/save', auth, async (req, res) => {
+  try {
+    const listingId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(listingId)) {
+      return res.status(400).json({ message: 'Invalid listing ID format' });
+    }
+
+    const listing = await Listing.findById(listingId);
+    if (!listing) {
+      return res.status(404).json({ message: 'Listing not found' });
+    }
+
+    // Kullanıcının savedListings array'inde bu listing zaten var mı?
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Eğer listing zaten kaydedilmişse tekrar eklemeyelim
+    if (user.savedListings && user.savedListings.includes(listing._id)) {
+      return res.status(200).json({ message: 'Listing already saved' });
+    }
+
+    // Listing'i kullanıcının savedListings array'ine ekle
+    user.savedListings = user.savedListings || [];
+    user.savedListings.push(listing._id);
+    await user.save();
+
+    res.json({ message: 'Listing saved successfully' });
+  } catch (error) {
+    console.error('Error saving listing:', error);
+    res.status(500).json({ message: 'Error saving listing', error: error.message });
+  }
+});
+
+// Remove (Unsave) a saved listing
+router.delete('/:id/save', auth, async (req, res) => {
+  try {
+    const listingId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(listingId)) {
+      return res.status(400).json({ message: 'Invalid listing ID format' });
+    }
+
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!user.savedListings || !user.savedListings.includes(listingId)) {
+      return res.status(404).json({ message: 'Listing not found in saved listings' });
+    }
+
+    // Listing'i kaydedilenlerden çıkar
+    user.savedListings = user.savedListings.filter(id => id.toString() !== listingId.toString());
+    await user.save();
+
+    res.json({ message: 'Listing removed from saved successfully' });
+  } catch (error) {
+    console.error('Error removing saved listing:', error);
+    res.status(500).json({ message: 'Error removing saved listing', error: error.message });
+  }
+});
+
+// Get all saved listings for the current user
+router.get('/saved', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId)
+      .populate({
+        path: 'savedListings',
+        populate: {
+          path: 'host',
+          select: 'name avatar occupation preferences'
+        }
+      });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // user.savedListings zaten populate edilmiş listing'ler olacak
+    res.json(user.savedListings || []);
+  } catch (error) {
+    console.error('Error fetching saved listings:', error);
+    res.status(500).json({ message: 'Error fetching saved listings', error: error.message });
+  }
+});
+
 export default router;
