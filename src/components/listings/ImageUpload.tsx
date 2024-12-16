@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Upload, X } from 'lucide-react';
+import { Upload, X} from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface ImageUploadProps {
@@ -68,8 +68,8 @@ export function ImageUpload({
             size="sm"
             onClick={() => fileInputRef.current?.click()}
           >
-            <Upload className="w-4 h-4 mr-2" />
-            Upload Images
+            <Upload className="w-4 h-4 sm:mr-2" />
+            <span className="hidden sm:inline">Upload Images</span>
           </Button>
         )}
       </div>

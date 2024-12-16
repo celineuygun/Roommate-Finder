@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ImageUpload } from './ImageUpload';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
@@ -367,8 +367,9 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                   className="flex-1 px-3 py-2 border rounded-md"
                   placeholder="e.g., WiFi, Air Conditioning"
                 />
-                <Button type="button" onClick={addAmenity} variant="outline">
-                  Add
+                <Button variant="outline" size="sm" onClick={addAmenity} className="flex items-center">
+                  <Plus className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Add</span>
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2">

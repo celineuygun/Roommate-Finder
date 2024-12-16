@@ -165,7 +165,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
             {/* Back Button*/}
             <button
               onClick={() => window.history.back()}
-              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+              className="hidden md:flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             >
               <ArrowLeft className="w-5 h-5 sm:mr-2" />
               <span className="hidden sm:inline">Back</span>
