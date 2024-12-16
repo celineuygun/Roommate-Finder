@@ -304,6 +304,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                 required
                 min="0"
                 value={listing.price}
+                onFocus={(e) => e.target.select()} 
                 onChange={(e) => setListing({ ...listing, price: Number(e.target.value) })}
                 className="w-full px-3 py-2 border rounded-md"
               />
@@ -420,6 +421,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                     min="18"
                     max="99"
                     value={listing.preferences.ageRange[0]}
+                    onFocus={(e) => e.target.select()} 
                     onChange={(e) => updatePreference('ageRange', [
                       Number(e.target.value),
                       listing.preferences.ageRange[1]
@@ -432,6 +434,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
                     min="18"
                     max="99"
                     value={listing.preferences.ageRange[1]}
+                    onFocus={(e) => e.target.select()} 
                     onChange={(e) => updatePreference('ageRange', [
                       listing.preferences.ageRange[0],
                       Number(e.target.value)

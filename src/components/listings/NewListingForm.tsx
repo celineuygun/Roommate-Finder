@@ -243,6 +243,7 @@ export function NewListingForm() {
                 required
                 min="0"
                 value={formData.price}
+                onFocus={(e) => e.target.select()} 
                 onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
                 className="w-full px-3 py-2 border rounded-md"
               />
@@ -368,6 +369,7 @@ export function NewListingForm() {
                     type="number"
                     min="18"
                     max="99"
+                    onFocus={(e) => e.target.select()} 
                     value={formData.host.preferences.ageRange[0]}
                     onChange={(e) => setFormData({
                       ...formData,
@@ -387,6 +389,7 @@ export function NewListingForm() {
                     min="18"
                     max="99"
                     value={formData.host.preferences.ageRange[1]}
+                    onFocus={(e) => e.target.select()} 
                     onChange={(e) => setFormData({
                       ...formData,
                       host: {

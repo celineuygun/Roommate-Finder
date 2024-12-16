@@ -116,6 +116,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
                 className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 placeholder="Min"
                 value={filters.priceRange[0]}
+                onFocus={(e) => e.target.select()} 
                 onChange={(e) =>
                   onFilterChange({
                     ...filters,
@@ -130,6 +131,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
                 className="w-full px-3 py-2 text-sm border rounded-md text-gray-600"
                 placeholder="Max"
                 value={filters.priceRange[1]}
+                onFocus={(e) => e.target.select()} 
                 onChange={(e) =>
                   onFilterChange({
                     ...filters,
@@ -201,6 +203,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
                 min="18"
                 max="99"
                 value={filters.preferences.ageRange[0]}
+                onFocus={(e) => e.target.select()} 
                 onChange={(e) => onFilterChange({
                   ...filters,
                   preferences: {
@@ -216,6 +219,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
                 min="18"
                 max="99"
                 value={filters.preferences.ageRange[1]}
+                onFocus={(e) => e.target.select()} 
                 onChange={(e) => onFilterChange({
                   ...filters,
                   preferences: {

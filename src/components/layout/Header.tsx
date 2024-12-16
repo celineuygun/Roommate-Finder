@@ -24,7 +24,7 @@ export function Header() {
             </a>
           </div>
 
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
                 <a 
