@@ -3,16 +3,19 @@ import { Search } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ListingCard } from './ListingCard';
 import type { Listing } from '../../types';
+import { useTranslation } from '../../translate/useTranslations';
 
 interface SavedListingsProps {
   listings: Listing[];
 }
 
 export function SavedListings({ listings }: SavedListingsProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white dark:bg-slate-950 rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Saved Listings</h2>
+        <h2 className="text-xl font-semibold">{t('saved_listings_title')}</h2>
       </div>
 
       {listings.length > 0 ? (
@@ -24,7 +27,7 @@ export function SavedListings({ listings }: SavedListingsProps) {
       ) : (
         <div className="text-center py-12 bg-gray-50 dark:bg-slate-900 rounded-lg">
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            You haven't saved any listings yet.
+            {t('saved_listings_no_listings')}
           </p>
           <Button
             variant="outline"
@@ -33,7 +36,7 @@ export function SavedListings({ listings }: SavedListingsProps) {
             className="inline-flex items-center"
           >
             <Search className="w-4 h-4 mr-2" />
-            Browse Listings
+            {t('saved_listings_browse_listings')}
           </Button>
         </div>
       )}
