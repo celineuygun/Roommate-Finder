@@ -39,7 +39,14 @@ router.get('/profile', auth, async (req, res) => {
         populate: {
           path: 'host',
           select: 'name avatar occupation preferences'
-        }
+        },
+      })
+      .populate({
+        path: 'savedListings',
+        populate: {
+          path: 'host',
+          select: 'name avatar occupation preferences',
+        },
       });
 
     if (!user) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { ListingCard } from '../listings/ListingCard';
+import { ListingCard } from './ListingCard';
 import type { Listing } from '../../types';
 
 interface UserListingsProps {

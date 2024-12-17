@@ -20,6 +20,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const [listing, setListing] = useState<Listing | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSaved, setIsSaved] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -81,6 +82,73 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       fetchInquiries();
     }
   }, [isOwner, listingId, listing, user, showInquiries]);
+
+  useEffect(() => {
+    const fetchSaveStatus = async () => {
+      // Ensure all required data is available
+      if (!user || !listing || !listingId) {
+        console.log('Data not yet available. Skipping fetch.');
+        return;
+      }
+  
+      // Avoid fetching saved status if the user is the owner
+      if (listing?.host?._id === user?._id) {
+        console.log("User is the owner, skipping saved status fetch.");
+        return;
+      }
+  
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found, user not authenticated');
+        return;
+      }
+  
+      try {
+        const response = await fetch(`http://localhost:3000/api/listings/saved-listings`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Failed to fetch saved listings: ${response.statusText}`);
+        }
+  
+      const savedListings: Listing[] = await response.json();
+      console.log('Fetched saved listings:', savedListings);
+
+      const isListingSaved = savedListings.some((saved: Listing) => saved._id === listingId);
+
+        setIsSaved(isListingSaved);
+      } catch (err) {
+        console.error('Error checking save status:', err);
+      }
+    };
+  
+    fetchSaveStatus();
+  }, [listingId, listing, user]);
+  
+  const toggleSaveListing = async () => {
+    try {
+      const method = isSaved ? 'DELETE' : 'POST';
+      const response = await fetch(`http://localhost:3000/api/listings/${listingId}/saved-listings`, {
+        method,
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+      });
+  
+      if (!response.ok) throw new Error('Failed to toggle save status');
+  
+      const result = await response.json();
+      console.log(result.message); // Log success message
+  
+      // Toggle local state
+      setIsSaved(!isSaved);
+    } catch (err) {
+      console.error('Error toggling save:', err);
+    }
+  };
+  
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this listing?')) {
@@ -216,9 +284,15 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                     <Share2 className="w-4 h-4 sm:mr-2" />
                     <span className="hidden sm:inline">Share</span>
                   </Button>
-                  <Button variant="outline" size="sm" className="flex items-center">
-                    <Heart className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Save</span>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center"
+                    onClick={toggleSaveListing}
+                  >
+                    <Heart className={`w-4 h-4 sm:mr-2 ${isSaved ? 'fill-red-500' : ''}`} />
+                    <span className="hidden sm:inline">{isSaved ? 'Unsave' : 'Save'}</span>
                   </Button>
                 </>
               )}

@@ -12,4 +12,5 @@ export interface User {
   preferences: UserPreferences;
   avatar?: string;
   listings?: Listing[];
+  savedListings?: Listing[];
 }

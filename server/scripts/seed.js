@@ -20,6 +20,7 @@ const sampleUsers = [
       pets: true,
       nightLife: true
     },
+    savedListings: [],
     isVerified: true,
   },
   {
@@ -35,6 +36,7 @@ const sampleUsers = [
       pets: false,
       nightLife: false
     },
+    savedListings: [],
     isVerified: true,
   },
   {
@@ -50,6 +52,7 @@ const sampleUsers = [
       pets: true,
       nightLife: true
     },
+    savedListings: [],
     isVerified: true,
   }
 ];

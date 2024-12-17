@@ -1,9 +1,9 @@
 import React from 'react';
 import { Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { SettingsPage } from '../settings/SettingsPage';
+import { SavedListingsPage } from '../listings/SavedListingsPage';
 import { ProfileInfo } from './ProfileInfo';
-import { UserListings } from './UserListings';
+import { UserListings } from '../listings/UserListings';
 import { useProfile } from '../../hooks/useProfile';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
@@ -94,6 +94,17 @@ export function ProfilePage() {
           <div className="lg:col-span-2">
             <UserListings listings={profileData.listings || []} />
           </div>
+
+          <div className="mt-6">
+  <Button
+    variant="outline"
+    size="sm"
+    onClick={() => (window.location.href = '/saved-listings')}
+    className="w-full"
+  >
+    View Saved Listings
+  </Button>
+</div>
         </div>
       </main>
       <ChatPortal/>

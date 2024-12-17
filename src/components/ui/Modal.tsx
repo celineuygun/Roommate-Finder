@@ -30,14 +30,14 @@ export const Modal: React.FC<ModalProps> = ({
           {onConfirm && (
             <button
               onClick={onConfirm}
-              className="bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700"
+              className="bg-blue-600 dark:bg-slate-600 hover:bg-blue-700 dark:hover:bg-slate-800 text-white px-4 py-2 rounded"
             >
               {confirmLabel}
             </button>
           )}
           <button
             onClick={onClose}
-            className="bg-gray-400 text-gray-700 dark:text-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+            className="bg-gray-400 text-white dark:text-gray-300 px-4 py-2 rounded hover:bg-gray-500"
           >
             {closeLabel}
           </button>

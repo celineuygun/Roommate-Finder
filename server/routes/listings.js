@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
@@ -122,6 +123,30 @@ router.get('/my-listings', auth, async (req, res) => {
   }
 });
 
+// Get all saved listings for the current user
+router.get('/saved-listings', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId)
+      .populate({
+        path: 'savedListings',
+        populate: {
+          path: 'host',
+          select: 'name avatar occupation preferences'
+        }
+      });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // user.savedListings zaten populate edilmiş listing'ler olacak
+    res.json(user.savedListings || []);
+  } catch (error) {
+    console.error('Error fetching saved listings:', error);
+    res.status(500).json({ message: 'Error fetching saved listings', error: error.message });
+  }
+});
+
 // Get listing by id
 router.get('/:id', async (req, res) => {
   try {
@@ -233,7 +258,7 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 // Save (Bookmark) a listing
-router.post('/:id/save', auth, async (req, res) => {
+router.post('/:id/saved-listings', auth, async (req, res) => {
   try {
     const listingId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(listingId)) {
@@ -269,7 +294,7 @@ router.post('/:id/save', auth, async (req, res) => {
 });
 
 // Remove (Unsave) a saved listing
-router.delete('/:id/save', auth, async (req, res) => {
+router.delete('/:id/saved-listings', auth, async (req, res) => {
   try {
     const listingId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(listingId)) {
@@ -293,30 +318,6 @@ router.delete('/:id/save', auth, async (req, res) => {
   } catch (error) {
     console.error('Error removing saved listing:', error);
     res.status(500).json({ message: 'Error removing saved listing', error: error.message });
-  }
-});
-
-// Get all saved listings for the current user
-router.get('/saved', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.userId)
-      .populate({
-        path: 'savedListings',
-        populate: {
-          path: 'host',
-          select: 'name avatar occupation preferences'
-        }
-      });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // user.savedListings zaten populate edilmiş listing'ler olacak
-    res.json(user.savedListings || []);
-  } catch (error) {
-    console.error('Error fetching saved listings:', error);
-    res.status(500).json({ message: 'Error fetching saved listings', error: error.message });
   }
 });
 
