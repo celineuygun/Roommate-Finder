@@ -23,6 +23,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const [isSaved, setIsSaved] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [showInquiries, setShowInquiries] = useState(false);
   const [inquiries, setInquiries] = useState<Message[]>([]);
@@ -151,10 +152,6 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   
 
   const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete this listing?')) {
-      return;
-    }
-
     setIsDeleting(true);
     try {
       const response = await fetch(`http://localhost:3000/api/listings/${listingId}`, {
@@ -173,6 +170,16 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       setError(err instanceof Error ? err.message : 'Failed to delete listing');
       setIsDeleting(false);
     }
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalVisible(false);
+  };
+
+  const handleDeleteModalConfirm = () => {
+    setIsDeleting(true);
+    handleDelete();
+    setIsDeleteModalVisible(false);
   };
 
   const handleShare = () => {
@@ -268,7 +275,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                   <Button 
                     variant="secondary" 
                     size="sm"
-                    onClick={handleDelete}
+                    onClick={() => setIsDeleteModalVisible(true)}
                     disabled={isDeleting}
                     className="flex items-center"
                   >
@@ -474,6 +481,17 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
         title="Link Copied!"
         message={`The link has been successfully copied to your clipboard.`}
         onClose={() => setIsModalVisible(false)}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isVisible={isDeleteModalVisible}
+        title="Delete Listing"
+        message="Are you sure you want to delete this listing? This action cannot be undone."
+        onClose={handleDeleteModalClose}
+        onConfirm={handleDeleteModalConfirm}
+        confirmLabel="Delete"
+        closeLabel="Cancel"
       />
 
     </div>

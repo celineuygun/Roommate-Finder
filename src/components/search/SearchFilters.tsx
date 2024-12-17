@@ -66,7 +66,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
     <div className="bg-white dark:bg-slate-950  p-4 rounded-lg shadow-sm text-gray-600 dark:text-gray-400">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Filters</h3>
-        <Button variant="outline" size="sm" onClick={handleClear}>
+        <Button variant="outline" size="sm" onClick={handleClear} className="inline-flex items-center">
           <SlidersHorizontal className="w-4 h-4 mr-2" />
           Clear All
         </Button>

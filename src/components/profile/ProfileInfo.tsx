@@ -93,9 +93,9 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
       <div className="flex justify-between items-start mb-6">
         <h2 className="text-xl font-semibold">Profile Information</h2>
         {!isEditing ? (
-          <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
+          <Button variant="outline" size="sm" onClick={() => setIsEditing(true)} className="inline-flex items-center">
             <Edit2 className="w-4 h-4 sm:mr-2" />
-            <span className="hidden sm:inline">Edit Profile</span>
+            <span className="hidden sm:inline">Edit</span>
           </Button>
         ) : (
           <div className="flex space-x-2">

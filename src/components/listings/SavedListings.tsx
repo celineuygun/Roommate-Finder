@@ -1,4 +1,5 @@
 import React from 'react';
+import { Search } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ListingCard } from './ListingCard';
 import type { Listing } from '../../types';
@@ -29,7 +30,9 @@ export function SavedListings({ listings }: SavedListingsProps) {
             variant="outline"
             size="sm"
             onClick={() => window.location.href = '/listings'}
+            className="inline-flex items-center"
           >
+            <Search className="w-4 h-4 mr-2" />
             Browse Listings
           </Button>
         </div>

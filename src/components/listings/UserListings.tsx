@@ -17,6 +17,7 @@ export function UserListings({ listings }: UserListingsProps) {
           variant="outline" 
           size="sm"
           onClick={() => window.location.href = '/new-listing'}
+          className="inline-flex items-center"
         >
           <Plus className="w-4 h-4 sm:mr-2" />
           <span className="hidden sm:inline">Add New Listing</span>
@@ -38,6 +39,7 @@ export function UserListings({ listings }: UserListingsProps) {
             variant="outline"
             size="sm"
             onClick={() => window.location.href = '/new-listing'}
+            className="inline-flex items-center"
           >
             <Plus className="w-4 h-4 mr-2" />
             Create Your First Listing

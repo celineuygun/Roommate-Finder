@@ -67,6 +67,7 @@ export function ImageUpload({
             variant="outline"
             size="sm"
             onClick={() => fileInputRef.current?.click()}
+            className="inline-flex items-center"
           >
             <Upload className="w-4 h-4 sm:mr-2" />
             <span className="hidden sm:inline">Upload Images</span>
