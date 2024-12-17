@@ -182,8 +182,6 @@ export default function App() {
           <RegisterForm />
         ) : path === '/profile' ? (
           <ProfilePage />
-        ) : path === '/saved-listings' ? (
-          <SavedListingsPage />
         ) : path === '/settings' ? (
           <SettingsPage />
         ) : path === '/new-listing' ? (
@@ -215,7 +213,7 @@ export default function App() {
                     </div>
                   ) : filteredListings.length === 0 ? (
                     <div className="text-center py-12">
-                      <p className="text-gray-600 dark:text-gray-300">No listings found matching your criteria.</p>
+                      <p className="text-gray-600 dark:text-gray-400">No listings found matching your criteria.</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

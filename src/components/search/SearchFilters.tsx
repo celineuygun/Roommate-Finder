@@ -63,7 +63,7 @@ export function SearchFilters({ filters, onFilterChange }: SearchFiltersProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-950  p-4 rounded-lg shadow-sm text-gray-600 dark:text-gray-300">
+    <div className="bg-white dark:bg-slate-950  p-4 rounded-lg shadow-sm text-gray-600 dark:text-gray-400">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Filters</h3>
         <Button variant="outline" size="sm" onClick={handleClear}>

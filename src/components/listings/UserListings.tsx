@@ -31,7 +31,7 @@ export function UserListings({ listings }: UserListingsProps) {
         </div>
       ) : (
         <div className="text-center py-12 bg-gray-50 dark:bg-slate-900  rounded-lg">
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
             You haven't created any listings yet.
           </p>
           <Button

@@ -160,7 +160,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
       <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-gray-100">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Error Loading Listing</h2>
-          <p className="text-gray-600 dark:text-gray-300">{error || 'Listing not found'}</p>
+          <p className="text-gray-600 dark:text-gray-400">{error || 'Listing not found'}</p>
           <Button
             variant="primary"
             size="sm"

@@ -211,7 +211,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       <div className="min-h-screen flex items-center justify-center text-gray-900 dark:text-gray-100">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Error Loading Listing</h2>
-          <p className="text-gray-600 dark:text-gray-300">{error || 'Listing not found'}</p>
+          <p className="text-gray-600 dark:text-gray-400">{error || 'Listing not found'}</p>
           <Button
             variant="primary"
             size="sm"
@@ -330,7 +330,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
 
               <div className="border-t border-gray-200 pt-6">
                 <h2 className="text-lg font-semibold mb-4">Description</h2>
-                <p className="text-gray-600 dark:text-gray-300">{listing.description}</p>
+                <p className="text-gray-600 dark:text-gray-400">{listing.description}</p>
               </div>
 
               <div className="border-t border-gray-200 pt-6 mt-6">
@@ -374,7 +374,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                   size="lg"
                 />
                 <h3 className="font-semibold text-lg mt-4">{listing.host.name}</h3>
-                <p className="text-gray-600 dark:text-gray-300">{listing.host.occupation}</p>
+                <p className="text-gray-600 dark:text-gray-400">{listing.host.occupation}</p>
               </div>
 
               {isOwner ? (
