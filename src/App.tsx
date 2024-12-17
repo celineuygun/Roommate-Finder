@@ -9,7 +9,6 @@ import { SearchFilters } from './components/search/SearchFilters';
 import { SignInForm } from './components/auth/SignInForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ProfilePage } from './components/profile/ProfilePage';
-import { SavedListingsPage } from './components/listings/SavedListingsPage';
 import { SettingsPage } from './components/settings/SettingsPage';
 import { EmailVerification } from './components/email/EmailVerification';
 import { ChatPortal } from './components/chat/ChatPortal';

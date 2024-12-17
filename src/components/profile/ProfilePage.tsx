@@ -3,6 +3,7 @@ import { Settings, LogOut } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ProfileInfo } from './ProfileInfo';
 import { UserListings } from '../listings/UserListings';
+import { SavedListings } from '../listings/SavedListings';
 import { ListingCard } from '../listings/ListingCard';
 import { useProfile } from '../../hooks/useProfile';
 import { useAuth } from '../../contexts/AuthContext';
@@ -13,31 +14,6 @@ import type { Listing } from '../../types';
 export function ProfilePage() {
   const { logout } = useAuth();
   const { isLoading, error, profileData, updateProfile } = useProfile();
-  const [savedListings, setSavedListings] = useState<Listing[]>([]);
-  const [isLoadingListings, setIsLoadingListings] = useState(true);
-  const [errorListings, setErrorListings] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchSavedListings = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/listings/saved-listings', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
-
-        if (!response.ok) throw new Error(`Failed to fetch saved listings: ${response.statusText}`);
-
-        const data = await response.json();
-        setSavedListings(data);
-      } catch (err) {
-        setErrorListings(err instanceof Error ? err.message : 'Something went wrong');
-      } finally {
-        setIsLoadingListings(false);
-      }
-    };
-
-    fetchSavedListings();
-  }, []);
 
   if (isLoading) {
     return (
@@ -122,35 +98,10 @@ export function ProfilePage() {
           </div>
 
           {/* Saved Listings */}
-          <div className="lg:col-span-3 mt-8">
-            <div className="bg-white dark:bg-slate-950 rounded-lg shadow p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold">Saved Listings</h2>
-              </div>
-
-              {savedListings.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {savedListings.map((listing) => (
-                    <ListingCard key={listing._id} listing={listing} />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-12 bg-gray-50 dark:bg-slate-900 rounded-lg">
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    You haven't saved any listings yet.
-                  </p>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => window.location.href = '/listings'}
-                  >
-                    Browse Listings
-                  </Button>
-                </div>
-              )}
-            </div>
-            </div>
+          <div className="lg:col-span-3">
+            <SavedListings listings={profileData.savedListings || []} />
           </div>
+        </div>
       </main>
       <ChatPortal/>
     </div>
