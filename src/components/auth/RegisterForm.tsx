@@ -35,6 +35,7 @@ const INITIAL_FORM_STATE: RegisterFormData = {
     nightLife: false
   }
 };
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export function RegisterForm() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

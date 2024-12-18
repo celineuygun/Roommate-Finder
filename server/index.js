@@ -17,9 +17,12 @@ dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
+// İzin verilen origin'leri environment variable'dan al
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+// Socket.IO CORS Ayarları
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: allowedOrigins,
     credentials: true
   }
 });
@@ -28,10 +31,13 @@ const __dirname = path.resolve();
 
 
 // Middleware
+// CORS Ayarları
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: allowedOrigins,
   credentials: true
-}));
+}));;
+
 app.use(express.json());
 
 // Serve uploaded files
@@ -98,13 +104,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/messages', messageRoutes);
 
-if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/dist")));
-  console.log(__dirname);
-  app.get("*",(req, res) => {
-    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-  })
-}
+
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -114,14 +115,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Serve static files from the dist folder
+  /*  // Serve static files from the dist folder
 const distPath = path.join(__dirname, '../dist');
 app.use(express.static(distPath));
 
 // Redirect all non-API routes to React's index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
+  res.sendFile(path.join(distPath, "dist", 'index.html'));
 });
+*/
+app.use(express.static(path.join(__dirname, "/dist")));
+  console.log(__dirname);
+  app.get("*",(req, res) => {
+    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+})
 
 
 const PORT = process.env.PORT || 3000;

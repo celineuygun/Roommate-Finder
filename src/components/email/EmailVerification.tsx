@@ -3,6 +3,7 @@ import { Header } from '../layout/Header';
 import { Button } from '../ui/Button'; // Assuming you have a reusable Button component
 
 export const EmailVerification: React.FC = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const [verificationMessage, setVerificationMessage] = useState('Verifying email...');
   const [isVerified, setIsVerified] = useState(false);
 
@@ -11,7 +12,7 @@ export const EmailVerification: React.FC = () => {
     const token = params.get('token');
 
     if (token) {
-      fetch(`http://localhost:3000/api/auth/verify-email?token=${token}`)
+      fetch(`${API_BASE_URL}/api/auth/verify-email?token=${token}`)
         .then((res) => res.json())
         .then((data) => {
           setVerificationMessage(data.message || 'Verifying email...');

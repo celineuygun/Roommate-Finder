@@ -60,7 +60,7 @@ export function NewListingForm() {
   const [location, setLocation] = useState<LocationState>({ city: '', district: '' });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -85,7 +85,7 @@ export function NewListingForm() {
       formDataToSend.append('amenities', JSON.stringify(formData.amenities));
       formDataToSend.append('preferences', JSON.stringify(formData.host.preferences));
 
-      const response = await fetch('http://localhost:3000/api/listings', {
+      const response = await fetch(`${API_BASE_URL}/api/listings`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

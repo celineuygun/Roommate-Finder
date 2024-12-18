@@ -26,7 +26,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const handleAvatarUpload = async (file: File) => {
     setIsLoading(true);
     setError(null);
@@ -34,7 +34,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
       const formData = new FormData();
       formData.append('avatar', file);
 
-      const response = await fetch('http://localhost:3000/api/users/avatar', {
+      const response = await fetch(`${API_BASE_URL}/api/users/avatar`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

@@ -27,12 +27,12 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
   const [newAmenity, setNewAmenity] = useState('');
   const [images, setImages] = useState<File[]>([]); // Yeni fotoğraflar
   const [existingImages, setExistingImages] = useState<string[]>([]); // Mevcut fotoğraflar
-
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/listings/${listingId}`);
+        const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`);
         if (!response.ok) {
           throw new Error(t('fetchListingError'));
         }
@@ -95,7 +95,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
       // Append existing images to retain
       formData.append('existingImages', JSON.stringify(existingImages));
 
-      const response = await fetch(`http://localhost:3000/api/listings/${listingId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

@@ -12,7 +12,7 @@ interface ChatThread {
   lastMessage: Message;
   unreadCount: number;
 }
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 export function ChatPortal() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -26,7 +26,7 @@ export function ChatPortal() {
 
     const fetchThreads = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/messages/threads', {
+        const response = await fetch(`${API_BASE_URL}/api/messages/threads`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }

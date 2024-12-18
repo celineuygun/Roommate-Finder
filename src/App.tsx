@@ -32,7 +32,7 @@ const initialFilters: FilterOptions = {
     occupation: 'any'
   }
 };
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 export default function App() {
   const { isAuthenticated } = useAuth();
   const [filters, setFilters] = useState<FilterOptions>(initialFilters);
@@ -45,8 +45,9 @@ export default function App() {
 
   useEffect(() => {
     const fetchListings = async () => {
+      console.log(API_BASE_URL);
       try {
-        const response = await fetch('http://localhost:3000/api/listings');
+        const response = await fetch(`${API_BASE_URL}/api/listings`);
         if (!response.ok) {
           throw new Error('Failed to fetch listings');
         }
@@ -141,7 +142,7 @@ export default function App() {
     const token = params.get('token');
     
     if (token) {
-      fetch(`http://localhost:3000/api/auth/verify-email?token=${token}`)
+      fetch(`${API_BASE_URL}/api/auth/verify-email?token=${token}`)
         .then((res) => res.json())
         .then((data) => {
           setVerificationMessage(data.message || 'Verifying email...');

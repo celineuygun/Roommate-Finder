@@ -33,11 +33,11 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const [selectedInquiry, setSelectedInquiry] = useState<Message | null>(null);
 
   const isOwner = user?._id === listing?.host._id;
-
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/listings/${listingId}`);
+        const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`);
         if (!response.ok) {
           throw new Error(t("error_loading_listing"));
         }
@@ -60,7 +60,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       setIsLoadingInquiries(true);
       try {
         const response = await fetch(
-          `http://localhost:3000/api/messages/listing/${listingId}/inquiries`,
+          `${API_BASE_URL}/api/messages/listing/${listingId}/inquiries`,
           {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -107,7 +107,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       }
   
       try {
-        const response = await fetch(`http://localhost:3000/api/listings/saved-listings`, {
+        const response = await fetch(`${API_BASE_URL}/api/listings/saved-listings`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const toggleSaveListing = async () => {
     try {
       const method = isSaved ? 'DELETE' : 'POST';
-      const response = await fetch(`http://localhost:3000/api/listings/${listingId}/saved-listings`, {
+      const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}/saved-listings`, {
         method,
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
       });
@@ -156,7 +156,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://localhost:3000/api/listings/${listingId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
