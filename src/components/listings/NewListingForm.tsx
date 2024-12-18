@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Home, Calendar, Plus, Minus } from 'lucide-react';
+import { MapPin, Home, Calendar, Plus, Minus, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ImageUpload } from './ImageUpload';
 import { cities, districts } from '../../utils/locations';
@@ -144,8 +144,17 @@ export function NewListingForm() {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 ">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            {/* Back Button*/}
+            <button
+              onClick={() => window.history.back()}
+              className="hidden md:flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              <ArrowLeft className="w-5 h-5 sm:mr-2" />
+              <span className="hidden sm:inline">{t("back_button")}</span>
+            </button>
+
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
             <img 
                 src="/site-icon.png" 

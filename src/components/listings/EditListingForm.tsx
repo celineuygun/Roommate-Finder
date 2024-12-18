@@ -227,7 +227,7 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
 
             {/* Existing Images */}
             <div>
-              <h3 className="text-sm font-medium text-gray-700 mb-2">{t("existing_images")}</h3>
+              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("existing_images")}</h3>
               <div className="flex gap-4 flex-wrap">
                 {existingImages.map((imageUrl, index) => (
                   <div key={index} className="relative">
