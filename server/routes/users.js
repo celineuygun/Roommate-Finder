@@ -13,7 +13,7 @@ const API_BASE_URL = process.env.VITE_API_URL;
 // Burada diskStorage kullanarak dosyayı 'uploads/avatars' klasörüne kaydediyoruz.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = path.join(process.cwd(), 'uploads', 'avatars');
+    const uploadPath = path.join(process.cwd(), 'public', 'avatars');
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
@@ -83,7 +83,7 @@ router.post('/avatar', auth, upload.single('avatar'), async (req, res) => {
     }
 
     // Kaydedilen dosyanın yolunu elde edelim
-    const avatarUrl = `${API_BASE_URL}/uploads/avatars/${req.file.filename}`;
+    const avatarUrl = `${API_BASE_URL}/public/avatars/${req.file.filename}`;
 
     // Kullanıcının avatar alanını güncelle
     const user = await User.findByIdAndUpdate(
@@ -120,7 +120,7 @@ router.delete('/profile', auth, async (req, res) => {
         // Delete associated images for the listing
         for (const imageUrl of listing.images) {
           try {
-            const imagePath = path.join('uploads/listings', path.basename(imageUrl));
+            const imagePath = path.join('public/listings', path.basename(imageUrl));
             await fs.unlink(imagePath);
           } catch (err) {
             console.error('Error deleting listing image file:', err);

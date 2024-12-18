@@ -12,7 +12,7 @@ const router = express.Router();
 // Configure multer for image upload
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
-    const uploadDir = 'uploads/listings';
+    const uploadDir = 'public/listings';
     try {
       await fs.mkdir(uploadDir, { recursive: true });
       cb(null, uploadDir);
@@ -46,7 +46,7 @@ const upload = multer({
 // Create new listing
 router.post('/', auth, upload.array('images', 5), async (req, res) => {
   try {
-    const imageUrls = req.files.map(file => `/uploads/listings/${file.filename}`);
+    const imageUrls = req.files.map(file => `/public/listings/${file.filename}`);
     
     // Parse preferences from the request body
     const preferences = JSON.parse(req.body.preferences);
@@ -182,7 +182,7 @@ router.put('/:id', auth, upload.array('images', 5), async (req, res) => {
     // Delete the old images that are not in existingImages
     for (const imageUrl of imagesToDelete) {
       try {
-        const imagePath = path.join('uploads/listings', path.basename(imageUrl));
+        const imagePath = path.join('public/listings', path.basename(imageUrl));
         await fs.unlink(imagePath); // Silme işlemi
       } catch (err) {
         console.error('Error deleting image file:', err);
@@ -192,7 +192,7 @@ router.put('/:id', auth, upload.array('images', 5), async (req, res) => {
     // Handle new images
     let imageUrls = existingImages; // Mevcut resimleri koruyarak başla
     if (req.files && req.files.length > 0) {
-      const newImageUrls = req.files.map(file => `/uploads/listings/${file.filename}`);
+      const newImageUrls = req.files.map(file => `/public/listings/${file.filename}`);
       imageUrls = [...imageUrls, ...newImageUrls]; // Yeni resimleri ekle
     }
 
@@ -237,7 +237,7 @@ router.delete('/:id', auth, async (req, res) => {
     // Delete associated images
     for (const imageUrl of listing.images) {
       try {
-        const imagePath = path.join('uploads/listings', path.basename(imageUrl));
+        const imagePath = path.join('public/listings', path.basename(imageUrl));
         await fs.unlink(imagePath);
       } catch (err) {
         console.error('Error deleting image file:', err);
