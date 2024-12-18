@@ -7,7 +7,7 @@ interface SocketContextType {
 }
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 export function SocketProvider({ children }: { children: React.ReactNode }) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const { token } = useAuth();
@@ -21,7 +21,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const newSocket = io('http://localhost:3000', {
+    const newSocket = io(`${API_BASE_URL}`, {
       auth: {
         token
       }

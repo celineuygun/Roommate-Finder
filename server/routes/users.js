@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 
 const router = express.Router();
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 // Avatar yükleme için multer ayarları
 // Burada diskStorage kullanarak dosyayı 'uploads/avatars' klasörüne kaydediyoruz.
 const storage = multer.diskStorage({
@@ -83,7 +83,7 @@ router.post('/avatar', auth, upload.single('avatar'), async (req, res) => {
     }
 
     // Kaydedilen dosyanın yolunu elde edelim
-    const avatarUrl = `http://localhost:3000/uploads/avatars/${req.file.filename}`;
+    const avatarUrl = `${API_BASE_URL}/uploads/avatars/${req.file.filename}`;
 
     // Kullanıcının avatar alanını güncelle
     const user = await User.findByIdAndUpdate(
