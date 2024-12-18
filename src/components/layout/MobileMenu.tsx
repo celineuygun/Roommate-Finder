@@ -3,6 +3,7 @@ import { X, LogIn, UserPlus, LogOut, User, PlusCircle, Settings } from 'lucide-r
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import type { User as UserType } from '../../types';
+import { useTranslation } from '../../translate/useTranslations';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }: MobileMenuProps) {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
@@ -52,7 +54,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
                 onClick={() => window.location.href = '/profile'}
               >
                 <User className="w-4 h-4 mr-2" />
-                Profile
+                {t('mobile_profile')}
               </Button>
               <Button 
                 variant="outline" 
@@ -61,7 +63,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
                 onClick={() => window.location.href = '/new-listing'}
               >
                 <PlusCircle className="w-4 h-4 mr-2" />
-                Create Listing
+                {t('mobile_create_listing')}
               </Button>
               <Button 
                 variant="secondary" 
@@ -70,7 +72,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
                 onClick={onLogout}
               >
                 <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
+                {t('mobile_sign_out')}
               </Button>
             </>
           ) : (
@@ -82,7 +84,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
                 onClick={() => window.location.href = '/signin'}
               >
                 <LogIn className="w-4 h-4 mr-2" />
-                Sign In
+                {t('mobile_sign_in')}
               </Button>
               <Button 
                 variant="primary" 
@@ -91,7 +93,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
                 onClick={() => window.location.href = '/register'}
               >
                 <UserPlus className="w-4 h-4 mr-2" />
-                Register
+                {t('mobile_register')}
               </Button>
             </>
           )}
@@ -106,7 +108,7 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
               onClick={() => window.location.href = '/settings'}
             >
               <Settings className="w-4 h-4 mr-2" />
-              Settings
+              {t('mobile_settings')}
             </Button>
           </div>
         )}

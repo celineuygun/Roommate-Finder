@@ -8,9 +8,14 @@ export const translations: Record<string, Record<string, string>> = {
 
     // Header metinleri
     "header_brand": "RoommateFinder",
-    "header_create_listing": "Create Listing",
     "header_sign_in": "Sign In",
     "header_register": "Register",
+    "mobile_sign_in": "Sign In",
+    "mobile_register": "Register",
+    "mobile_profile": "Profile",
+    "mobile_create_listing": "Create Listing",
+    "mobile_sign_out": "Sign Out",
+    "mobile_settings": "Settings",
     "header_language_en": "EN",
     "header_language_tr": "TR",
 
@@ -233,10 +238,15 @@ export const translations: Record<string, Record<string, string>> = {
     "hero_search_placeholder": "Konum, başlık veya açıklama ile arayın...",
 
     // Header metinleri
-    "header_brand": "RoommateFinder", 
-    "header_create_listing": "İlan Oluştur",
+    "header_brand": "RoommateFinder",
     "header_sign_in": "Giriş Yap",
     "header_register": "Kayıt Ol",
+    "mobile_sign_in": "Giriş Yap",
+    "mobile_register": "Kayıt Ol",
+    "mobile_profile": "Profil",
+    "mobile_create_listing": "İlan Oluştur",
+    "mobile_sign_out": "Çıkış Yap",
+    "mobile_settings": "Ayarlar",
     "header_language_en": "EN",
     "header_language_tr": "TR",
 
