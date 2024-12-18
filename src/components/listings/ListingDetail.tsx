@@ -482,20 +482,20 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       {/* Share Confirmation Modal */}
       <Modal
         isVisible={isModalVisible}
-        title="Link Copied!"
-        message={`The link has been successfully copied to your clipboard.`}
+        title={t("share_confirmation")}
+        message={t("share_message")}
         onClose={() => setIsModalVisible(false)}
       />
 
       {/* Delete Confirmation Modal */}
       <Modal
         isVisible={isDeleteModalVisible}
-        title="Delete Listing"
-        message="Are you sure you want to delete this listing? This action cannot be undone."
+        title={t("delete_listing_title")}
+        message={t("delete_confirmation_text")}
         onClose={handleDeleteModalClose}
         onConfirm={handleDeleteModalConfirm}
-        confirmLabel="Delete"
-        closeLabel="Cancel"
+        confirmLabel={t("delete_listing")}
+        closeLabel={t("cancel")}
       />
 
     </div>
