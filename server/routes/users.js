@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 
 const router = express.Router();
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_BASE_URL = process.env.VITE_API_URL;
 // Avatar yükleme için multer ayarları
 // Burada diskStorage kullanarak dosyayı 'uploads/avatars' klasörüne kaydediyoruz.
 const storage = multer.diskStorage({
