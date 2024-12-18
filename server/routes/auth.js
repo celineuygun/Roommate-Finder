@@ -188,7 +188,8 @@ router.post('/login', validateLogin, async (req, res) => {
       phone: user.phone,
       occupation: user.occupation,
       bio: user.bio,
-      preferences: user.preferences
+      preferences: user.preferences,
+      avatar: user.avatar
     };
 
     res.json({
