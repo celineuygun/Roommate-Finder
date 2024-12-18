@@ -132,7 +132,7 @@ export function RegisterForm() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
-                    placeholder="Jackie Chen"
+                    placeholder={t("full_name_placeholder")}
                   />
                 </div>
               </div>
@@ -214,7 +214,7 @@ export function RegisterForm() {
                     value={formData.occupation}
                     onChange={(e) => setFormData({ ...formData, occupation: e.target.value })}
                     className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
-                    placeholder="Software Engineer"
+                    placeholder={t("occupation_placeholder")}
                   />
                 </div>
               </div>

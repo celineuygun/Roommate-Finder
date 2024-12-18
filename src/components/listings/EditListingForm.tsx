@@ -184,20 +184,21 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
           <button
             onClick={() => window.history.back()}
-            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            className="hidden md:flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
           >
-            <ArrowLeft className="w-5 h-5 sm:mr-2" />
-            <span className="hidden sm:inline">{t('back')}</span>
+            <ArrowLeft className="w-5 h-5 mr-2" />{t('back')}
           </button>
-          <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
-          <img 
-                src="/site-icon.png" 
-                alt="Site Icon" 
-                className="w-8 h-8 mr-2"
-              />
-            {t('header_brand')}
-          </a>
-          <div className="w-16" /> {/* Spacer to balance layout */}
+          
+          <div className="absolute left-1/2 transform -translate-x-1/2">
+            <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
+            <img 
+                  src="/site-icon.png" 
+                  alt="Site Icon" 
+                  className="w-8 h-8 mr-2"
+                />
+              {t('header_brand')}
+            </a>
+          </div>
         </div>
       </header>
 

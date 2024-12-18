@@ -211,7 +211,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
                 rows={3}
               />
             ) : (
-              <p className="mt-1 text-gray-600 dark:text-gray-400">{user.bio || 'No bio provided'}</p>
+              <p className="mt-1 text-gray-600 dark:text-gray-400">{user.bio || t("no_bio")}</p>
             )}
           </div>
         </div>
@@ -253,20 +253,26 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
               </>
             ) : (
               <div className="flex flex-wrap gap-2">
-                {editedUser.preferences.smoking && (
-                  <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
-                    {t("smoking_allowed")}
-                  </span>
-                )}
-                {editedUser.preferences.pets && (
-                  <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
-                    {t("pet_friendly")}
-                  </span>
-                )}
-                {editedUser.preferences.nightLife && (
-                  <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
-                    {t("night_life_friendly")}
-                  </span>
+                {Object.values(editedUser.preferences).every((value) => !value) ? (
+                   <span className="text-gray-600 dark:text-gray-400">{t("no_preferences")}</span>
+                ) : (
+                  <>
+                    {editedUser.preferences.smoking && (
+                      <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
+                        {t("smoking_allowed")}
+                      </span>
+                    )}
+                    {editedUser.preferences.pets && (
+                      <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
+                        {t("pet_friendly")}
+                      </span>
+                    )}
+                    {editedUser.preferences.nightLife && (
+                      <span className="px-2 py-1 bg-slate-50 text-slate-600 rounded-full text-sm">
+                        {t("night_life_friendly")}
+                      </span>
+                    )}
+                  </>
                 )}
               </div>
             )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, LogOut } from 'lucide-react';
+import { Settings, LogOut, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ProfileInfo } from './ProfileInfo';
 import { UserListings } from '../listings/UserListings';
@@ -49,7 +49,18 @@ export function ProfilePage() {
       <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">
+            {/* Back Button*/}
+            <button
+              onClick={() => window.history.back()}
+              className="hidden md:flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              <ArrowLeft className="w-5 h-5 sm:mr-2" />
+              <span className="hidden sm:inline">{t("back_button")}</span>
+            </button>
+            
+            
+            <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200
+                                    md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
               <img 
                   src="/site-icon.png" 
                   alt="Site Icon" 
