@@ -21,7 +21,7 @@ export function Hero({ onSearch }: HeroProps) {
       <div className="absolute inset-0">
         <img
           className="w-full h-full object-cover mix-blend-multiply filter brightness-50"
-          src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+          src="hero-img.jpeg"
           alt="Modern living room"
         />
       </div>
