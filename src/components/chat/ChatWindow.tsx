@@ -14,7 +14,7 @@ interface ChatWindowProps {
   showBackButton?: boolean;
   showListingsButton?: boolean,
 }
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showListingsButton}: ChatWindowProps) {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -30,7 +30,7 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
     const fetchMessages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/messages/${listingId}/${otherUser._id}`,
+          `${API_BASE_URL}/api/messages/${listingId}/${otherUser._id}`,
           {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -55,7 +55,7 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
     const markMessagesAsRead = async () => {
       try {
         await fetch(
-          `http://localhost:3000/api/messages/read/${otherUser._id}`,
+          `${API_BASE_URL}/api/messages/read/${otherUser._id}`,
           {
             method: 'PUT',
             headers: {

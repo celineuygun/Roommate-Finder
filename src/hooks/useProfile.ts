@@ -7,7 +7,7 @@ export function useProfile() {
   const [error, setError] = useState<string | null>(null);
   const [profileData, setProfileData] = useState<User | null>(null);
   const { token } = useAuth();
-
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -37,7 +37,7 @@ export function useProfile() {
 
   const updateProfile = async (updatedData: Partial<User>) => {
     try {
-      const response = await fetch('http://localhost:3000/api/users/profile', {
+      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
