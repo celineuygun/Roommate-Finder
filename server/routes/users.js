@@ -4,7 +4,7 @@ import User from '../models/User.js';
 import Listing from '../models/Listing.js'
 import Message from '../models/Message.js';
 import multer from 'multer';
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 
 const router = express.Router();
@@ -123,7 +123,11 @@ router.delete('/profile', auth, async (req, res) => {
             const imagePath = path.join('public/listings', path.basename(imageUrl));
             await fs.unlink(imagePath);
           } catch (err) {
-            console.error('Error deleting listing image file:', err);
+            if (err.code === 'ENOENT') {
+              console.warn(`File not found: ${err.path}`);
+            } else {
+              console.error('Error deleting listing image file:', err);
+            }
           }
         }
         // Delete the listing
@@ -131,17 +135,10 @@ router.delete('/profile', auth, async (req, res) => {
       }
     }
 
-    // // Update all messages where this user is the sender
-    // await Message.updateMany(
-    //   { sender: userId },
-    //   { $set: { sender: null } } // Set sender to null for deleted users
-    // );
-
-    // // Update all messages where this user is the receiver
-    // await Message.updateMany(
-    //   { receiver: userId },
-    //   { $set: { receiver: null } } // Set receiver to null for deleted users
-    // );
+    // Delete messages where the user is either the sender or receiver
+    await Message.deleteMany({
+      $or: [{ sender: user._id }, { receiver: user._id }],
+    });
 
     // Finally, delete the user
     await user.deleteOne();

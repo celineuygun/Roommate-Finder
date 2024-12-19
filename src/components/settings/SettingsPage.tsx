@@ -134,7 +134,7 @@ export function SettingsPage() {
           setIsSuccessModalVisible(false);
           logout(); // Perform logout
         }}
-        closeLabel="OK"
+        closeLabel={t('go_to_home')}
       />
     </div>
   );
