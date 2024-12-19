@@ -300,7 +300,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                     onClick={()=>{if (!user?._id) {
                       window.location.href="/signin";
                     } else {
-                      toggleSaveListing;
+                      toggleSaveListing();
                     }}}
                   >
                     <Heart className={`w-4 h-4 sm:mr-2 ${isSaved ? 'fill-red-500' : ''}`} />
