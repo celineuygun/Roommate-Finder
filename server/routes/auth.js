@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { validateRegistration, validateLogin } from '../middleware/validation.js';
 import transporter from '../scripts/mailer.js';
-
+import auth from '../middleware/auth.js';
 const router = express.Router();
 
 export async function sendVerificationEmail(to, token) {
@@ -58,7 +58,22 @@ export async function sendVerificationEmail(to, token) {
       throw error;
   }
 }
+// GET /api/auth/verify
+router.get('/verify', auth, async (req, res) => {
+  try {
+    // Token'dan elde edilen userId ile kullanıcıyı veritabanından bul
+    const user = await User.findById(req.user.userId).select('-password'); // Şifreyi dahil etmemek için '-password'
 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error('Error in verify endpoint:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // Register
 router.post('/register', validateRegistration, async (req, res) => {

@@ -16,16 +16,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check localStorage on mount
+    const verifyToken = async (token: string) => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/verify`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.user);
+          setUser(data.user);
+        } else {
+          // Token geçersizse logout yap
+          logout();
+        }
+      } catch (error) {
+        console.error('Error verifying token:', error);
+        logout();
+      }
+    };
+
+    // localStorage'dan token ve user bilgisini al
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-    
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
+      verifyToken(storedToken); // Token'ı doğrula
     }
-  }, []);
-
+  }, [token]);
+  
   const login = (newToken: string, newUser: User) => {
     setToken(newToken);
     setUser(newUser);
