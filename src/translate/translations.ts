@@ -46,6 +46,8 @@ export const translations: Record<string, Record<string, string>> = {
     "filters_lifestyle_night_life": "Night Life Friendly",
     "filters_room_private": 'Private',
     "filters_room_shared": 'Shared',
+    "filters_no_listings": "No listings found matching you criteria",
+
     // Listing detail
     "share_button": "Share",
     "save_button": "Save",
@@ -164,6 +166,7 @@ export const translations: Record<string, Record<string, string>> = {
     "registration_successful": "Registration Successful",
     "verify_email_message": "Please check your email to verify your account.",
     "go_to_sign_in": "Go to Sign In",
+    "go_to_home": "Go to Home",
     "close": "Close",
     // sign in
     "sign_in_title": "Sign in to Your Account",
@@ -172,6 +175,10 @@ export const translations: Record<string, Record<string, string>> = {
     "signing_in": "Signing In...",
     "login_failed": "Login Failed",
     "invalid_cred": "Invalid Credentials",
+    "email_success_message":"Your email is successfully verified.",
+    "email_error_message":"An error occurred while verifying your email.",
+    "email_welcome_back": "Welcome Back!",
+
     // chat portal
     "messages": "Messages",
     "no_messages_yet": "No messages yet",
@@ -277,6 +284,7 @@ export const translations: Record<string, Record<string, string>> = {
     "filters_lifestyle_night_life": "Gece Hayatına Uygun",
     "filters_room_private": 'Özel',
     "filters_room_shared": 'Paylaşımlı',
+    "filters_no_listings": "Kriterlere uygun ilan bulunamadı",
     // listing detail
     "back_button": "Geri",
     "share_button": "Paylaş",
@@ -303,7 +311,7 @@ export const translations: Record<string, Record<string, string>> = {
     "description": "Açıklama",
     "amenities": "Olanaklar",
     "roommate_preferences": "Oda Arkadaşı Tercihleri",
-    "available_from": "Başlangıç Tarihi",
+    "available_from": "Tarihinden İtibaren",
     "room_type": "Oda",
     "month": "Ay",
     "listing_occupation_any": "Fark Etmez",
@@ -395,6 +403,7 @@ export const translations: Record<string, Record<string, string>> = {
     "registration_successful": "Kayıt Başarılı",
     "verify_email_message": "Hesabınızı doğrulamak için lütfen e-postanızı kontrol edin.",
     "go_to_sign_in": "Giriş Sayfasına Git",
+    "go_to_home": "Anasayfaya Dön",
     "close": "Kapat",
     // sign in
     "sign_in_title": "Hesabınıza Giriş Yapın",
@@ -403,6 +412,10 @@ export const translations: Record<string, Record<string, string>> = {
     "signing_in": "Giriş Yapılıyor...",
     "login_failed": "Giriş Başarısız",
     "invalid_cred": "Geçersiz e-mail veya şifre ",
+    "email_success_message": "Mail adresiniz başarıyla doğrulandı.",
+    "email_error_message": "Mail adresiniz doğrulanırken bir hata meydana geldi.",
+    "email_welcome_back": "Yeniden Hoşgeldiniz!",
+
     // chat portal
     "messages": "Mesajlar",
     "no_messages_yet": "Henüz mesajınız yok",

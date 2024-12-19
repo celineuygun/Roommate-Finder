@@ -172,9 +172,9 @@ export function RegisterForm() {
                     onChange={(e) => setFormData({ ...formData, gender: e.target.value as 'male' | 'female' | 'other' })}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-slate-500 focus:border-slate-500 sm:text-sm"
                   >
-                    <option value={t('gender_male')}>Male</option>
-                    <option value={t('gender_female')}>Female</option>
-                    <option value={t('gender_other')}>Other</option>
+                    <option value="male">{t('gender_male')}</option>
+                    <option value="female">{t('gender_female')}</option>
+                    <option value="other">{t('gender_other')}</option>
                   </select>
                 </div>
               </div>
