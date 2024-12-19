@@ -45,7 +45,6 @@ export default function App() {
 
   useEffect(() => {
     const fetchListings = async () => {
-      console.log(API_BASE_URL);
       try {
         const response = await fetch(`${API_BASE_URL}/api/listings`);
         if (!response.ok) {

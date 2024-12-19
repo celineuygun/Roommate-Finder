@@ -11,7 +11,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import type { Listing, Message } from '../../types';
 import { ChatPortal } from '../chat/ChatPortal';
 import { useTranslation } from '../../translate/useTranslations';
-
 interface ListingDetailProps {
   listingId: string;
 }
@@ -298,7 +297,11 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                     variant="outline"
                     size="sm"
                     className="flex items-center"
-                    onClick={toggleSaveListing}
+                    onClick={()=>{if (!user?._id) {
+                      window.location.href="/signin";
+                    } else {
+                      toggleSaveListing;
+                    }}}
                   >
                     <Heart className={`w-4 h-4 sm:mr-2 ${isSaved ? 'fill-red-500' : ''}`} />
                     <span className="hidden sm:inline">
@@ -410,7 +413,11 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
                   variant={showChat ? 'secondary' : 'primary'}
                   size="lg"
                   className="w-full mb-4 flex items-center justify-center relative"
-                  onClick={() => setShowChat(!showChat)}
+                  onClick={() => {if (!user?._id) {
+                    window.location.href="/signin";
+                  } else {
+                    setShowChat(!showChat);
+                  }}}
                 >
                   <MessageCircle className="absolute left-6 w-6 h-6" />
                   <span>{showChat ? t("hide_chat") : t("contact_host")}</span>

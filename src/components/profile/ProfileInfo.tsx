@@ -41,7 +41,6 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
         },
         body: formData
       });
-
       if (!response.ok) {
         const respText = await response.text();
         console.error('Avatar upload error response:', respText);
