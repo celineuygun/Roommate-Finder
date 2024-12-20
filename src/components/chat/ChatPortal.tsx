@@ -20,7 +20,7 @@ export function ChatPortal() {
   const [threads, setThreads] = useState<ChatThread[]>([]);
   const [selectedThread, setSelectedThread] = useState<ChatThread | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { token, logout } = useAuth();
+  const { token } = useAuth();
 
   useEffect(() => {
     if (!user) return;
@@ -32,10 +32,6 @@ export function ChatPortal() {
             'Authorization': `Bearer ${token}`
           }
         });
-        if (response.status === 401 && token) {
-          logout();
-          throw new Error('Unauthorized. Please log in again.');
-        }
         if (!response.ok) throw new Error('Failed to fetch threads');
         
         const data = await response.json();
