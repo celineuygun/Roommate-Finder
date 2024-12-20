@@ -4,13 +4,13 @@ import User from '../models/User.js';
 import Listing from '../models/Listing.js'
 import Message from '../models/Message.js';
 import multer from 'multer';
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
-
 const router = express.Router();
 const API_BASE_URL = process.env.VITE_API_URL;
+
 // Avatar yükleme için multer ayarları
-// Burada diskStorage kullanarak dosyayı 'uploads/avatars' klasörüne kaydediyoruz.
+// Burada diskStorage kullanarak dosyayı 'public/avatars' klasörüne kaydediyoruz.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(process.cwd(), 'public', 'avatars');

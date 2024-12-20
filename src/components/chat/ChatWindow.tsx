@@ -23,6 +23,7 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { token, logout } = useAuth();
 
   useEffect(() => {
     if (!user || !otherUser) return;
@@ -33,11 +34,14 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
           `${API_BASE_URL}/api/messages/${listingId}/${otherUser._id}`,
           {
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
+              'Authorization': `Bearer ${token}`
             }
           }
         );
-        
+        if (response.status === 401 && token) {
+          logout();
+          throw new Error('Unauthorized. Please log in again.');
+        }
         if (!response.ok) throw new Error('Failed to fetch messages');
         
         const data = await response.json();
@@ -59,10 +63,11 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
           {
             method: 'PUT',
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
+              'Authorization': `Bearer ${token}`
             }
           }
         );
+        
       } catch (error) {
         console.error('Error marking messages as read:', error);
       }

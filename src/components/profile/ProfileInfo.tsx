@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { Avatar } from './Avatar';
 import type { User as UserType, UserPreferences } from '../../types';
 import { useTranslation } from '../../translate/useTranslations';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface ProfileInfoProps {
   user: UserType;
@@ -27,6 +28,7 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const API_BASE_URL = import.meta.env.VITE_API_URL;
+  const { token, logout } = useAuth();
   const handleAvatarUpload = async (file: File) => {
     setIsLoading(true);
     setError(null);
@@ -37,10 +39,15 @@ export function ProfileInfo({ user, onUpdateProfile }: ProfileInfoProps) {
       const response = await fetch(`${API_BASE_URL}/api/users/avatar`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         },
         body: formData
       });
+
+      if (response.status === 401 && token) {
+        logout();
+        throw new Error('Unauthorized. Please log in again.');
+      }
       if (!response.ok) {
         const respText = await response.text();
         console.error('Avatar upload error response:', respText);
