@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(JSON.parse(storedUser));
       verifyToken(storedToken); // Token'ı doğrula
     }
-  }, [token]);
+  }, []);
   
   const login = (newToken: string, newUser: User) => {
     setToken(newToken);
