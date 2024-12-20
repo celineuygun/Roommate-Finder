@@ -7,7 +7,6 @@ import { cities, districts } from '../../utils/locations';
 import type { Listing } from '../../types';
 import type { ListingPreferences } from '../../types/preferences';
 import { useTranslation } from '../../translate/useTranslations';
-import { useAuth } from '../../contexts/AuthContext';
 
 interface EditListingFormProps {
   listingId: string;
@@ -29,7 +28,6 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
   const [images, setImages] = useState<File[]>([]); // Yeni fotoğraflar
   const [existingImages, setExistingImages] = useState<string[]>([]); // Mevcut fotoğraflar
   const API_BASE_URL = import.meta.env.VITE_API_URL;
-  const { token, logout } = useAuth();
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -100,14 +98,11 @@ export function EditListingForm({ listingId }: EditListingFormProps) {
       const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: formData
       });
-      if (response.status === 401 && token) {
-        logout();
-        throw new Error('Unauthorized. Please log in again.');
-      }
+
       if (!response.ok) {
         throw new Error(t('updateListingError'));
       }

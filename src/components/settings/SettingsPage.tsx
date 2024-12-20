@@ -14,9 +14,8 @@ export function SettingsPage() {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  const { logout, token } = useAuth();
+  const { logout } = useAuth();
   const API_BASE_URL = import.meta.env.VITE_API_URL;
-  
   const handleDeleteAccount = async () => {
     setIsDeleting(true);
     setError(null); // Clear any previous error
@@ -25,14 +24,11 @@ export function SettingsPage() {
       const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         },
       });
-      if (response.status === 401 && token) {
-        logout();
-        throw new Error('Unauthorized. Please log in again.');
-      }
+  
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || t('delete_account_error'));

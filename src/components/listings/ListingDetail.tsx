@@ -16,7 +16,7 @@ interface ListingDetailProps {
 }
 
 export function ListingDetail({ listingId }: ListingDetailProps) {
-  const { user, token, logout } = useAuth();
+  const { user } = useAuth();
   const { t } = useTranslation();
   const [listing, setListing] = useState<Listing | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,14 +62,11 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
           `${API_BASE_URL}/api/messages/listing/${listingId}/inquiries`,
           {
             headers: {
-              'Authorization': `Bearer ${token}`
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
           }
         );
-        if (response.status === 401 && token) {
-          logout();
-          throw new Error('Unauthorized. Please log in again.');
-        }
+
         if (!response.ok) {
           throw new Error('Failed to fetch inquiries');
         }
@@ -102,6 +99,7 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
         return;
       }
   
+      const token = localStorage.getItem('token');
       if (!token) {
         console.error('No token found, user not authenticated');
         return;
@@ -138,12 +136,9 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       const method = isSaved ? 'DELETE' : 'POST';
       const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}/saved-listings`, {
         method,
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
       });
-      if (response.status === 401 && token) {
-        logout();
-        throw new Error('Unauthorized. Please log in again.');
-      }
+  
       if (!response.ok) throw new Error('Failed to toggle save status');
   
       const result = await response.json();
@@ -163,13 +158,10 @@ export function ListingDetail({ listingId }: ListingDetailProps) {
       const response = await fetch(`${API_BASE_URL}/api/listings/${listingId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      if (response.status === 401 && token) {
-        logout();
-        throw new Error('Unauthorized. Please log in again.');
-      }
+
       if (!response.ok) {
         throw new Error(t("error_loading_listing"));
       }
