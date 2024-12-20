@@ -67,6 +67,10 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
             }
           }
         );
+        if (token) {
+          logout();
+          throw new Error('Unauthorized. Please log in again.');
+        }
       } catch (error) {
         console.error('Error marking messages as read:', error);
       }
