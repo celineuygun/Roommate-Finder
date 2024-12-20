@@ -23,7 +23,7 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
 
   useEffect(() => {
     if (!user || !otherUser) return;
@@ -38,6 +38,10 @@ export function ChatWindow({ otherUser, listingId, onBack, showBackButton, showL
             }
           }
         );
+        if (response.status === 401 && token) {
+          logout();
+          throw new Error('Unauthorized. Please log in again.');
+        }
         if (!response.ok) throw new Error('Failed to fetch messages');
         
         const data = await response.json();
