@@ -1,9 +1,10 @@
 import React from 'react';
-import { X, LogIn, UserPlus, LogOut, User, PlusCircle, Settings } from 'lucide-react';
+import { X, LogIn, UserPlus, LogOut, User, PlusCircle, Settings} from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Avatar } from '../profile/Avatar';
 import type { User as UserType } from '../../types';
 import { useTranslation } from '../../translate/useTranslations';
+import { useDarkMode } from '../../hooks/useDarkMode';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -15,6 +16,8 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }: MobileMenuProps) {
   const { t } = useTranslation();
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
   if (!isOpen) return null;
 
   return (
@@ -98,20 +101,19 @@ export function MobileMenu({ isOpen, onClose, isAuthenticated, user, onLogout }:
             </>
           )}
         </div>
+
         {/* Settings Button at the Bottom */}
-        {isAuthenticated && (
-          <div className="p-4 border-t border-gray-200 mt-auto">
-            <Button 
-              variant="primary" 
-              size="sm"
-              className="w-full flex items-center justify-center"
-              onClick={() => window.location.href = '/settings'}
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              {t('mobile_settings')}
-            </Button>
-          </div>
-        )}
+        <div className="p-4 border-t border-gray-200 mt-auto">
+          <Button 
+            variant="primary" 
+            size="sm"
+            className="w-full flex items-center justify-center"
+            onClick={() => window.location.href = '/settings'}
+          >
+          <Settings className="w-4 h-4 mr-2" />
+            {t('mobile_settings')}
+          </Button>
+        </div>
       </div>
     </div>
   );

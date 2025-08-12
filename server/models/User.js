@@ -86,9 +86,6 @@ const userSchema = new mongoose.Schema({
   tokenExpiration: Date,
 });
 
-// Add index for email to improve query performance
-userSchema.index({ email: 1 });
-
 // Pre-save middleware to ensure required fields
 userSchema.pre('save', function(next) {
   if (!this.preferences) {

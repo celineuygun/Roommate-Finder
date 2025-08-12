@@ -1,28 +1,32 @@
 import React, { useState } from 'react';
-import { Menu, LogIn, UserPlus} from 'lucide-react';
+import { Menu, LogIn, UserPlus, Sun, Moon} from 'lucide-react';
 import { Button } from '../ui/Button';
 import { MobileMenu } from './MobileMenu';
 import { useAuth } from '../../contexts/AuthContext';
 import { Avatar } from '../profile/Avatar';
 import { useTranslation } from '../../translate/useTranslations'; 
 import { useLanguage } from '../../contexts/LanguageContext'; 
+import { useDarkMode } from '../../hooks/useDarkMode';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const { t } = useTranslation();
   const { setLanguage, language } = useLanguage();
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-slate-950  border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Dil değiştirici butonlar */}
-          <div className="flex items-center">
+          {/* Language selector + Dark Mode toggle container */}
+          <div className="flex items-center space-x-4">
+
+            {/* Language selector */}
             <div className="relative inline-block text-left">
               <select
                 value={language}
-                onChange={(e) => setLanguage(e.target.value as Language)}
+                onChange={(e) => setLanguage(e.target.value as any)} // cast to your Language type if needed
                 className="appearance-none bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-md px-3 py-2 pr-6 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="en">🌐 {t("header_language_en")}</option>
@@ -36,15 +40,26 @@ export function Header() {
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
             </div>
+
+            {/* Dark mode toggle */}
+            <button
+              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              onClick={toggleDarkMode}
+              type="button"
+              className="hidden md:inline-flex p-1 text-blue-600 hover:text-slate-800 dark:text-yellow-400 dark:hover:text-slate-300 transition-colors duration-200"
+            >
+              {darkMode ? (
+                <Sun className="w-6 h-6" />
+              ) : (
+                <Moon className="w-6 h-6" />
+              )}
+            </button>
+
+
           </div>
           <div className="absolute left-1/2 transform -translate-x-1/2">
             <a href="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-slate-200">

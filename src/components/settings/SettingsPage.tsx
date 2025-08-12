@@ -104,7 +104,8 @@ export function SettingsPage() {
             </button>
           </div>
 
-          {/* Delete Account */}
+        {/* Delete Account */}
+        {token && (
           <div className="flex justify-center mt-8">
             <Button
               variant="outline"
@@ -115,6 +116,7 @@ export function SettingsPage() {
               {isDeleting ? <LoadingSpinner /> : t('delete_account')}
             </Button>
           </div>
+        )}
         </div>
       </main>
 
