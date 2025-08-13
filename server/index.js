@@ -141,7 +141,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const distPath = path.join(__dirname, '../dist');
+const distPath = path.join(__dirname, '/dist');
 
 // Serve static files from the dist folder
 app.use(express.static(distPath, {
