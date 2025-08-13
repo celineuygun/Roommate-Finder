@@ -132,7 +132,16 @@ app.use('/api/messages', messageRoutes);
 
 
 
-// Error handling middleware
+// Serve React frontend
+const distPath = path.join(__dirname, 'dist');
+app.use(express.static(distPath));
+
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) return res.status(404).json({ message: 'API route not found' });
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
+// Error handling 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
@@ -140,28 +149,6 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === 'development' ? err.message : 'Server error'
   });
 });
-
-const distPath = path.join(__dirname, '/dist');
-
-// Serve static files from the dist folder
-app.use(express.static(distPath, {
-  setHeaders: (res, path, stat) => {
-    console.log(`Serving static file: ${path}`);
-  }
-}));
-
-// Redirect all non-API routes to React's index.html
-app.get('*', (req, res) => {
-  console.log(`Catch-all route hit: ${req.method} ${req.originalUrl}`);
-  res.sendFile(path.join(distPath, 'index.html'));
-});
-
-
-// app.use(express.static(path.join(__dirname, "/dist")));
-//   app.get("*",(req, res) => {
-//     res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-// })
-
 
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
