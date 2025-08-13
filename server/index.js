@@ -134,19 +134,26 @@ app.use((err, req, res, next) => {
   });
 });
 
-  /*  // Serve static files from the dist folder
 const distPath = path.join(__dirname, '../dist');
-app.use(express.static(distPath));
+
+// Serve static files from the dist folder
+app.use(express.static(distPath, {
+  setHeaders: (res, path, stat) => {
+    console.log(`Serving static file: ${path}`);
+  }
+}));
 
 // Redirect all non-API routes to React's index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, "dist", 'index.html'));
+  console.log(`Catch-all route hit: ${req.method} ${req.originalUrl}`);
+  res.sendFile(path.join(distPath, 'index.html'));
 });
-*/
-app.use(express.static(path.join(__dirname, "/dist")));
-  app.get("*",(req, res) => {
-    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
-})
+
+
+// app.use(express.static(path.join(__dirname, "/dist")));
+//   app.get("*",(req, res) => {
+//     res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+// })
 
 
 const PORT = process.env.PORT || 3000;
