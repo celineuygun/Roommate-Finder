@@ -46,6 +46,8 @@ export default function App() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
+        console.log('Fetching listings from:', `${API_BASE_URL}/api/listings`);
+        
         const response = await fetch(`${API_BASE_URL}/api/listings`);
         if (!response.ok) {
           throw new Error('Failed to fetch listings');

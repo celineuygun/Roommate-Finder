@@ -4,7 +4,8 @@ import dotenv from 'dotenv';
 import User from '../models/User.js';
 import Listing from '../models/Listing.js';
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
+dotenv.config({ path: envFile });
 
 const sampleUsers = [
   {

@@ -13,7 +13,8 @@ import listingRoutes from './routes/listings.js';
 import messageRoutes from './routes/messages.js';
 import Message from './models/Message.js';
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
+dotenv.config({ path: envFile });
 
 const app = express();
 const httpServer = createServer(app);
@@ -21,6 +22,7 @@ const httpServer = createServer(app);
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
   : [];
+
 // Socket.IO CORS Ayarları
 const io = new Server(httpServer, {
   cors: {

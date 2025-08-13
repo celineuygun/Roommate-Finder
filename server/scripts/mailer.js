@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
-dotenv.config();
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
+dotenv.config({ path: envFile });
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',

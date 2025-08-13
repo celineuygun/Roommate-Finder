@@ -105,7 +105,7 @@ router.get('/', async (req, res) => {
     const listings = await Listing.find()
       .populate('host', 'name avatar occupation preferences')
       .sort({ createdAt: -1 });
-    res.json(listings);
+    res.json(listings || []);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -117,7 +117,7 @@ router.get('/my-listings', auth, async (req, res) => {
     const listings = await Listing.find({ host: req.user.userId })
       .populate('host', 'name avatar occupation preferences')
       .sort({ createdAt: -1 });
-    res.json(listings);
+    res.json(listings || []);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
