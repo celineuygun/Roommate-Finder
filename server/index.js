@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
@@ -18,21 +17,18 @@ dotenv.config({ path: envFile });
 
 const app = express();
 const httpServer = createServer(app);
-// İzin verilen origin'leri environment variable'dan al
+
+// Allowed origins from environment
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
   : [];
 
-// Socket.IO CORS Ayarları
+// Socket.IO
 const io = new Server(httpServer, {
   cors: {
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error(`Origin ${origin} not allowed by CORS`));
-      }
+      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
     },
     credentials: true
   }
@@ -40,82 +36,60 @@ const io = new Server(httpServer, {
 
 const __dirname = path.resolve();
 
-// Request logger
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-  if (req.method === 'POST' || req.method === 'PUT') {
-    console.log('Body:', req.body);
-  }
-  next();
-});
-
 // Middleware
-
+app.use(express.json());
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
-    }
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`Origin ${origin} not allowed by CORS`));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
-
-app.use(express.json());
 
 // Serve uploaded files
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB successfully');
-  })
-  .catch((err) => {
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => {
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
 
-// Socket.IO Authentication Middleware
+// Socket.IO auth
 io.use((socket, next) => {
   const token = socket.handshake.auth.token;
-  if (!token) {
-    return next(new Error('Authentication error'));
-  }
-
+  if (!token) return next(new Error('Authentication error'));
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     socket.userId = decoded.userId;
     next();
-  } catch (err) {
+  } catch {
     next(new Error('Authentication error'));
   }
 });
 
-// Socket.IO Connection Handler
+// Socket.IO connection
 io.on('connection', (socket) => {
   console.log('User connected:', socket.userId);
 
-  socket.on('sendMessage', async (messageData) => {
+  socket.on('sendMessage', async (data) => {
     try {
       const message = new Message({
         sender: socket.userId,
-        receiver: messageData.receiver,
-        listing: messageData.listing,
-        content: messageData.content
+        receiver: data.receiver,
+        listing: data.listing,
+        content: data.content
       });
-
-      const savedMessage = await message.save();
-      const populatedMessage = await Message.findById(savedMessage._id)
+      const saved = await message.save();
+      const populated = await Message.findById(saved._id)
         .populate('sender', 'name avatar')
         .populate('receiver', 'name avatar');
-
-      io.emit('newMessage', populatedMessage);
-    } catch (error) {
-      console.error('Error saving message:', error);
+      io.emit('newMessage', populated);
+    } catch (err) {
+      console.error(err);
     }
   });
 
@@ -124,24 +98,23 @@ io.on('connection', (socket) => {
   });
 });
 
-// Routes
+// API routes — MUST come before frontend catch-all
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/messages', messageRoutes);
 
-
-
 // Serve React frontend
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
 
-app.get('*', (req, res) => {
+// Catch-all route for SPA — ignores API paths
+app.all('*', (req, res) => {
   if (req.path.startsWith('/api')) return res.status(404).json({ message: 'API route not found' });
   res.sendFile(path.join(distPath, 'index.html'));
 });
 
-// Error handling 
+// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
@@ -150,10 +123,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Start server
 const PORT = process.env.PORT || 3000;
-httpServer.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
@@ -162,7 +134,7 @@ process.on('SIGINT', async () => {
     console.log('MongoDB connection closed');
     process.exit(0);
   } catch (err) {
-    console.error('Error during shutdown:', err);
+    console.error(err);
     process.exit(1);
   }
 });
