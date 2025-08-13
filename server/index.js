@@ -40,9 +40,16 @@ const io = new Server(httpServer, {
 
 const __dirname = path.resolve();
 
+// Request logger
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  if (req.method === 'POST' || req.method === 'PUT') {
+    console.log('Body:', req.body);
+  }
+  next();
+});
 
 // Middleware
-// CORS Ayarları
 
 app.use(cors({
   origin: (origin, callback) => {
